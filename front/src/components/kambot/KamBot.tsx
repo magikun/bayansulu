@@ -8,7 +8,7 @@ interface KamBotProps {
   className?: string
 }
 
-const moodVariants: Record<KamBotMood, object> = {
+const moodVariants: Record<KamBotMood, any> = {
   idle: {
     y:          [0, -10, 0],
     transition: { duration: 2.8, repeat: Infinity, ease: 'easeInOut' },

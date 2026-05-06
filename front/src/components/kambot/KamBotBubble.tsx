@@ -22,7 +22,6 @@ export default function KamBotBubble({ message, visible, side = 'right' }: KamBo
       {visible && (
         <motion.div
           className={`absolute z-10 max-w-[190px] ${side === 'right' ? 'right-0' : 'left-0'}`}
-          style={{ bottom: '105%' }}
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0, opacity: 0 }}
