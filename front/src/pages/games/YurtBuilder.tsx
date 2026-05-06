@@ -10,11 +10,20 @@ import { usePlayerStore } from '@/store/playerStore'
 import { getTranslation } from '@/data/locale'
 import type { KamBotMood } from '@/types'
 
+const LOCAL_TRANS: Record<string, { ru: string; kk: string }> = {
+  decorateBtn: { ru: 'Украсить юрту! 🎨', kk: 'Киіз үйді безендіру! 🎨' },
+  buildAgainBtn: { ru: 'Собрать заново! 🔄', kk: 'Қайта құру! 🔄' },
+  yurtTitle: { ru: 'Юрта построена! 🏕️', kk: 'Киіз үй құрылды! 🏕️' },
+  yurtSuccess: { ru: 'Твоя прекрасная юрта готова! Нажми кнопку ниже, чтобы начать украшать её!', kk: 'Сенің керемет киіз үйің дайын! Оны безендіру үшін төмендегі батырманы бас!' },
+  decorTitle: { ru: '🎨 Укрась свою юрту!', kk: '🎨 Киіз үйді безендір!' },
+  buildPiecesTitle: { ru: '🏗️ Детали сборки (собирай по порядку)', kk: '🏗️ Құрастыру бөліктері (ретімен жина)' }
+}
+
 const KAMBOT_MSGS: Record<string, { ru: string; kk: string }> = {
   base:  { ru: 'Отличное основание!',        kk: 'Тамаша негіз!' },
   walls: { ru: 'Форма появляется!',          kk: 'Пішін пайда болуда!' },
   crown: { ru: 'Почти готово! Давай!',       kk: 'Аз қалды! Жалғастыр!' },
-  felt:  { ru: 'Так тепло и уютно!',         kk: 'Қандай жылы және жайлы!' },
+  felt:  { ru: 'Так тепло и уютно!',         kk: 'Қандай жылы и жайлы!' },
   door:  { ru: 'Юрта готова! Поздравляю!',  kk: 'Киіз үй дайын! Құттықтаймын!' },
 }
 
@@ -88,13 +97,13 @@ export default function YurtBuilder() {
         {/* Yurt preview */}
         <div className="glass rounded-4xl p-4">
           <p className="text-white/50 text-xs font-bold mb-3 text-center">Your Yurt</p>
-          <div className="relative mx-auto" style={{ width: 180, height: 160 }}>
+          <div className="relative mx-auto animate-float" style={{ width: 180, height: 160 }}>
             {/* Base ring */}
             <AnimatePresence>
               {placed.has('base') && (
                 <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}
                   className="absolute bottom-0 left-1/2 -translate-x-1/2 rounded-full border-4 border-kazakh-gold"
-                  style={{ width: 160, height: 30, background: '#3D2A10' }} />
+                  style={{ width: 160, height: 30, background: '#3D2A10', zIndex: 1 }} />
               )}
             </AnimatePresence>
 
@@ -102,8 +111,8 @@ export default function YurtBuilder() {
             <AnimatePresence>
               {placed.has('walls') && (
                 <motion.div initial={{ scaleY: 0, originY: 1 }} animate={{ scaleY: 1 }}
-                  className="absolute bottom-6 left-1/2 -translate-x-1/2 rounded-t-lg border-2 border-kazakh-gold/50"
-                  style={{ width: 140, height: 70, background: 'linear-gradient(180deg, #5A3A1A, #3D2A10)' }}>
+                  className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-t-lg border-2 border-kazakh-gold/50"
+                  style={{ width: 140, height: 70, background: 'linear-gradient(180deg, #5A3A1A, #3D2A10)', zIndex: 2 }}>
                   {/* lattice lines */}
                   {[0,1,2,3].map(i => <div key={i} className="absolute border-r border-kazakh-gold/30 h-full" style={{ left: `${(i+1)*20}%` }} />)}
                   {[0,1,2].map(i => <div key={i} className="absolute border-b border-kazakh-gold/30 w-full" style={{ top: `${(i+1)*25}%` }} />)}
@@ -116,7 +125,7 @@ export default function YurtBuilder() {
               {placed.has('crown') && (
                 <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }}
                   className="absolute top-4 left-1/2 -translate-x-1/2 rounded-full border-2 border-kazakh-gold flex items-center justify-center"
-                  style={{ width: 50, height: 50, background: '#2D1B69' }}>
+                  style={{ width: 50, height: 50, background: '#2D1B69', zIndex: 4 }}>
                   <span className="text-xl">☸️</span>
                 </motion.div>
               )}
@@ -127,9 +136,9 @@ export default function YurtBuilder() {
               {placed.has('felt') && (
                 <motion.div initial={{ scaleY: 0, originY: 1 }} animate={{ scaleY: 1 }}
                   className="absolute left-1/2 -translate-x-1/2"
-                  style={{ bottom: 76, width: 150, height: 70,
+                  style={{ bottom: 73, width: 150, height: 70,
                     background: 'linear-gradient(180deg, #E8D5A0, #C8A860)',
-                    clipPath: 'polygon(50% 0%, 100% 100%, 0% 100%)', borderRadius: 4 }} />
+                    clipPath: 'polygon(50% 0%, 100% 100%, 0% 100%)', borderRadius: 4, zIndex: 3 }} />
               )}
             </AnimatePresence>
 
@@ -137,15 +146,18 @@ export default function YurtBuilder() {
             <AnimatePresence>
               {placed.has('door') && (
                 <motion.div initial={{ scaleY: 0, originY: 1 }} animate={{ scaleY: 1 }}
-                  className="absolute bottom-6 left-1/2 -translate-x-1/2 rounded-t-full border-2 border-kazakh-gold"
-                  style={{ width: 30, height: 42, background: '#8B4513' }} />
+                  className="absolute bottom-3 left-1/2 -translate-x-1/2 rounded-t-full border-2 border-kazakh-gold"
+                  style={{ width: 32, height: 44, background: '#8B4513', zIndex: 5 }} />
               )}
             </AnimatePresence>
 
-            {/* Decorations overlay */}
-            {decorations.has('carpet') && <div className="absolute bottom-7 left-5 text-xl">🎨</div>}
-            {decorations.has('dombra') && <div className="absolute bottom-7 right-5 text-xl">🎵</div>}
-            {decorations.has('lantern') && <div className="absolute top-14 right-3 text-xl">🏮</div>}
+            {/* Decorations overlay (Render all 6 decorations in strategic sandbox places) */}
+            {decorations.has('carpet') && <div className="absolute bottom-4 left-2 text-xl" style={{ zIndex: 10 }}>🎨</div>}
+            {decorations.has('dombra') && <div className="absolute bottom-4 right-2 text-xl" style={{ zIndex: 10 }}>🎵</div>}
+            {decorations.has('lantern') && <div className="absolute top-12 right-4 text-xl animate-pulse" style={{ zIndex: 10 }}>🏮</div>}
+            {decorations.has('chest') && <div className="absolute bottom-4 left-[34%] text-base" style={{ zIndex: 4 }}>🧰</div>}
+            {decorations.has('cauldron') && <div className="absolute bottom-4 left-10 text-base" style={{ zIndex: 10 }}>🫕</div>}
+            {decorations.has('flowers') && <div className="absolute bottom-4 right-10 text-base animate-bounce" style={{ zIndex: 10 }}>🌸</div>}
           </div>
 
           {/* Progress bar */}
@@ -160,7 +172,7 @@ export default function YurtBuilder() {
 
         {/* Pieces to place */}
         <div className="glass rounded-4xl p-3">
-          <p className="text-white/50 text-xs font-bold mb-2">🏗️ Build Pieces (place in order)</p>
+          <p className="text-white/50 text-xs font-bold mb-2">{LOCAL_TRANS.buildPiecesTitle[language]}</p>
           <div className="flex gap-2 overflow-x-auto pb-1">
             {yurtPieces.map((p, idx) => {
               const isNext = p.id === nextRequired
@@ -192,7 +204,15 @@ export default function YurtBuilder() {
             className="glass rounded-4xl p-3"
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
           >
-            <p className="text-white/50 text-xs font-bold mb-2">🎨 Decorate Your Yurt!</p>
+            <div className="flex justify-between items-center mb-2">
+              <p className="text-white/50 text-xs font-bold">{LOCAL_TRANS.decorTitle[language]}</p>
+              <button 
+                onClick={reset}
+                className="text-[10px] bg-red-600/20 hover:bg-red-600/35 text-red-200 border border-red-500/30 px-2 py-1 rounded-full font-bold transition-colors"
+              >
+                {LOCAL_TRANS.buildAgainBtn[language]}
+              </button>
+            </div>
             <div className="flex flex-wrap gap-2">
               {yurtDecorations.map(d => (
                 <motion.button
@@ -216,18 +236,20 @@ export default function YurtBuilder() {
       </div>
 
       {/* Complete modal */}
-      <Modal open={complete} onClose={reset}>
+      <Modal open={complete} onClose={() => setComplete(false)}>
         <div className="text-center">
           <div className="mb-3"><KamBot mood="celebrate" size={100} /></div>
-          <h2 className="text-kazakh-gold font-black text-2xl mb-1">Yurt Complete! 🏕️</h2>
-          <p className="text-white/70 font-bold text-sm mb-2">Your beautiful yurt is ready!</p>
+          <h2 className="text-kazakh-gold font-black text-2xl mb-1">{LOCAL_TRANS.yurtTitle[language]}</h2>
+          <p className="text-white/70 font-bold text-sm mb-2">{LOCAL_TRANS.yurtSuccess[language]}</p>
           <p className="text-white/60 text-sm mb-5">
             <span className="text-kazakh-gold font-black">+50 🪙 +80 ⭐ XP</span> earned!
           </p>
           <div className="glass rounded-3xl p-3 mb-4 text-4xl text-center">
             🏕️ ✨ 🎨 ✨ 🏕️
           </div>
-          <Button variant="primary" fullWidth onClick={reset}>Build Again! 🔄</Button>
+          <Button variant="primary" fullWidth onClick={() => setComplete(false)}>
+            {LOCAL_TRANS.decorateBtn[language]}
+          </Button>
         </div>
       </Modal>
     </GameLayout>
