@@ -98,7 +98,6 @@ export default function MathBattle() {
   }, [])
 
   const handleWrong = () => {
-    if (locked.current) return
     locked.current = true
     setCombo(0)
     setKamMood('sad')
