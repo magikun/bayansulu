@@ -173,13 +173,102 @@ export default function YurtBuilder() {
               )}
             </AnimatePresence>
 
-            {/* Decorations overlay (Render all 6 decorations in strategic sandbox places) */}
-            {decorations.has('carpet') && <div className="absolute bottom-4 left-2 text-xl" style={{ zIndex: 10 }}>🎨</div>}
-            {decorations.has('dombra') && <div className="absolute bottom-4 right-2 text-xl" style={{ zIndex: 10 }}>🎵</div>}
-            {decorations.has('lantern') && <div className="absolute top-12 right-4 text-xl animate-pulse" style={{ zIndex: 10 }}>🏮</div>}
-            {decorations.has('chest') && <div className="absolute bottom-4 left-[34%] text-base" style={{ zIndex: 4 }}>🧰</div>}
-            {decorations.has('cauldron') && <div className="absolute bottom-4 left-10 text-base" style={{ zIndex: 10 }}>🫕</div>}
-            {decorations.has('flowers') && <div className="absolute bottom-4 right-10 text-base animate-bounce" style={{ zIndex: 10 }}>🌸</div>}
+            {/* Decorations overlay (Render all 6 decorations as draggable sandbox sticker elements) */}
+            {decorations.has('carpet') && (
+              <motion.div
+                drag
+                dragConstraints={yurtPreviewRef}
+                dragElastic={0.05}
+                dragMomentum={false}
+                className="absolute bottom-4 left-2 text-2xl select-none touch-none"
+                style={{ zIndex: 20, cursor: 'grab' }}
+                whileHover={{ scale: 1.25, filter: 'drop-shadow(0px 4px 8px rgba(245,166,35,0.5))' }}
+                whileTap={{ cursor: 'grabbing' }}
+                whileDrag={{ scale: 1.35, zIndex: 100 }}
+              >
+                🎨
+              </motion.div>
+            )}
+
+            {decorations.has('dombra') && (
+              <motion.div
+                drag
+                dragConstraints={yurtPreviewRef}
+                dragElastic={0.05}
+                dragMomentum={false}
+                className="absolute bottom-4 right-2 text-2xl select-none touch-none"
+                style={{ zIndex: 20, cursor: 'grab' }}
+                whileHover={{ scale: 1.25, filter: 'drop-shadow(0px 4px 8px rgba(245,166,35,0.5))' }}
+                whileTap={{ cursor: 'grabbing' }}
+                whileDrag={{ scale: 1.35, zIndex: 100 }}
+              >
+                🎵
+              </motion.div>
+            )}
+
+            {decorations.has('lantern') && (
+              <motion.div
+                drag
+                dragConstraints={yurtPreviewRef}
+                dragElastic={0.05}
+                dragMomentum={false}
+                className="absolute top-12 right-4 text-2xl select-none touch-none"
+                style={{ zIndex: 20, cursor: 'grab' }}
+                whileHover={{ scale: 1.25, filter: 'drop-shadow(0px 4px 8px rgba(245,166,35,0.5))' }}
+                whileTap={{ cursor: 'grabbing' }}
+                whileDrag={{ scale: 1.35, zIndex: 100 }}
+              >
+                🏮
+              </motion.div>
+            )}
+
+            {decorations.has('chest') && (
+              <motion.div
+                drag
+                dragConstraints={yurtPreviewRef}
+                dragElastic={0.05}
+                dragMomentum={false}
+                className="absolute bottom-4 left-[34%] text-2xl select-none touch-none"
+                style={{ zIndex: 20, cursor: 'grab' }}
+                whileHover={{ scale: 1.25, filter: 'drop-shadow(0px 4px 8px rgba(245,166,35,0.5))' }}
+                whileTap={{ cursor: 'grabbing' }}
+                whileDrag={{ scale: 1.35, zIndex: 100 }}
+              >
+                🧰
+              </motion.div>
+            )}
+
+            {decorations.has('cauldron') && (
+              <motion.div
+                drag
+                dragConstraints={yurtPreviewRef}
+                dragElastic={0.05}
+                dragMomentum={false}
+                className="absolute bottom-4 left-10 text-2xl select-none touch-none"
+                style={{ zIndex: 20, cursor: 'grab' }}
+                whileHover={{ scale: 1.25, filter: 'drop-shadow(0px 4px 8px rgba(245,166,35,0.5))' }}
+                whileTap={{ cursor: 'grabbing' }}
+                whileDrag={{ scale: 1.35, zIndex: 100 }}
+              >
+                🫕
+              </motion.div>
+            )}
+
+            {decorations.has('flowers') && (
+              <motion.div
+                drag
+                dragConstraints={yurtPreviewRef}
+                dragElastic={0.05}
+                dragMomentum={false}
+                className="absolute bottom-4 right-10 text-2xl select-none touch-none"
+                style={{ zIndex: 20, cursor: 'grab' }}
+                whileHover={{ scale: 1.25, filter: 'drop-shadow(0px 4px 8px rgba(245,166,35,0.5))' }}
+                whileTap={{ cursor: 'grabbing' }}
+                whileDrag={{ scale: 1.35, zIndex: 100 }}
+              >
+                🌸
+              </motion.div>
+            )}
           </div>
 
           {/* Progress bar */}
