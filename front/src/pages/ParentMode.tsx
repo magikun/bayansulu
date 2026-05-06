@@ -8,20 +8,32 @@ import ProgressBar from '@/components/ui/ProgressBar'
 import Button from '@/components/ui/Button'
 import { usePlayerStore } from '@/store/playerStore'
 import { useGameStore } from '@/store/gameStore'
+import { getTranslation } from '@/data/locale'
 import { pageVariants } from '@/hooks/useAnimation'
 
 const CORRECT_PIN = '1234'
 
-const GAME_LABELS: Record<string, string> = {
-  memory: '🧠 Memory Rush',
-  runner: '🐪 Camel Runner',
-  yurt:   '🏕️ Yurt Builder',
-  quiz:   '🗺️ Quiz Adventure',
-  math:   '🔢 Math Battle',
+const GAME_LABELS_RU: Record<string, string> = {
+  memory: 'Собери сладости',
+  runner: 'Верблюд-Бегун',
+  yurt:   'Сборка Юрты',
+  quiz:   'Викторина КамБота',
+  math:   'Счёт с Ботой',
+}
+
+const GAME_LABELS_KK: Record<string, string> = {
+  memory: 'Тәттілерді жина',
+  runner: 'Түйе жүгіруші',
+  yurt:   'Киіз үй құрау',
+  quiz:   'КамБот викторинасы',
+  math:   'Ботамен санау',
 }
 
 export default function ParentMode() {
-  const navigate = useNavigate()
+  const navigate  = useNavigate()
+  const language  = usePlayerStore(s => s.language)
+  const t         = getTranslation(language)
+  const gameLabels = language === 'kk' ? GAME_LABELS_KK : GAME_LABELS_RU
   const { name, level, xp, xpToNext, botacoins, streak, badges, completedGames, reset } = usePlayerStore()
   const { highScores } = useGameStore()
 
@@ -49,7 +61,8 @@ export default function ParentMode() {
 
   return (
     <motion.div
-      className="min-h-dvh flex flex-col bg-deep-navy"
+      className="min-h-dvh flex flex-col"
+      style={{ background: '#0D0404' }}
       variants={pageVariants} initial="initial" animate="animate" exit="exit"
     >
       <HUDBar />
@@ -61,8 +74,8 @@ export default function ParentMode() {
           <div className="flex flex-col items-center justify-center min-h-[70vh] gap-6">
             <KamBot mood="salute" size={100} />
             <div className="text-center">
-              <h2 className="text-white font-black text-2xl mb-1">👤 Parent Mode</h2>
-              <p className="text-white/40 font-bold text-sm">Enter PIN to access</p>
+              <h2 className="font-black text-2xl mb-1" style={{ color: '#FEF3C7' }}>{t.parentModeTitle}</h2>
+              <p className="font-bold text-sm" style={{ color: 'rgba(254,243,199,0.4)' }}>{t.parentPinRequired}</p>
             </div>
 
             {/* PIN display */}
@@ -87,9 +100,9 @@ export default function ParentMode() {
             </motion.div>
 
             {pinError && (
-              <motion.p className="text-candy-pink font-bold text-sm"
+              <motion.p className="font-bold text-sm" style={{ color: '#F87171' }}
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                Wrong PIN! Try again
+                {t.parentWrongPin}
               </motion.p>
             )}
 
@@ -117,7 +130,7 @@ export default function ParentMode() {
           /* Dashboard */
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <h2 className="text-white font-black text-xl">📊 Parent Dashboard</h2>
+              <h2 className="font-black text-xl" style={{ color: '#FEF3C7' }}>{t.parentDashboard}</h2>
               <motion.div whileHover={{ scale: 1.05 }}>
                 <KamBot mood="salute" size={56} />
               </motion.div>
@@ -125,37 +138,40 @@ export default function ParentMode() {
 
             {/* Child summary */}
             <div className="glass rounded-4xl p-4">
-              <h3 className="text-white/50 text-xs font-bold mb-3 uppercase tracking-wide">Child Profile</h3>
+              <h3 className="text-xs font-bold mb-3 uppercase tracking-wide" style={{ color: 'rgba(254,243,199,0.45)' }}>{t.parentChildProfile}</h3>
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-12 h-12 rounded-full bg-kazakh-gold/20 flex items-center justify-center text-2xl">
+                <div className="w-12 h-12 rounded-full flex items-center justify-center text-2xl"
+                  style={{ background: 'rgba(217,119,6,0.18)', border: '1px solid rgba(217,119,6,0.3)' }}>
                   🦅
                 </div>
                 <div>
-                  <p className="text-white font-black">{name || 'Explorer'}</p>
-                  <p className="text-white/50 text-sm">Level {level} · {earnedBadges} badges earned</p>
+                  <p className="font-black" style={{ color: '#FEF3C7' }}>{name || (language === 'kk' ? 'Зерттеуші' : 'Исследователь')}</p>
+                  <p className="text-sm" style={{ color: 'rgba(254,243,199,0.45)' }}>
+                    {t.parentLevelLabel.replace('{level}', String(level))} · {t.parentBadgesEarned.replace('{count}', String(earnedBadges))}
+                  </p>
                 </div>
                 <div className="ml-auto text-right">
-                  <p className="text-kazakh-gold font-black">{botacoins} 🪙</p>
-                  <p className="text-warm-orange text-sm font-bold">{streak}🔥 streak</p>
+                  <p className="font-black" style={{ color: '#D97706' }}>{botacoins}</p>
+                  <p className="text-sm font-bold" style={{ color: '#EA580C' }}>{t.parentStreakDays.replace('{days}', String(streak))}</p>
                 </div>
               </div>
-              <ProgressBar value={xp} max={xpToNext} label="XP Progress" showLabel color="#00B4D8" height={10} />
+              <ProgressBar value={xp} max={xpToNext} label={t.rewardsXPTitle} showLabel color="#EA580C" height={10} />
             </div>
 
             {/* Game progress */}
             <div className="glass rounded-4xl p-4">
-              <h3 className="text-white/50 text-xs font-bold mb-3 uppercase tracking-wide">Game Progress</h3>
+              <h3 className="text-xs font-bold mb-3 uppercase tracking-wide" style={{ color: 'rgba(254,243,199,0.45)' }}>{t.parentGameProg}</h3>
               <div className="space-y-2">
-                {Object.entries(GAME_LABELS).map(([id, label]) => {
+                {Object.entries(gameLabels).map(([id, label]) => {
                   const done = completedGames.includes(id)
                   const hs   = highScores[id] ?? 0
                   return (
                     <div key={id} className="flex items-center gap-2">
-                      <span className="text-sm font-bold text-white/70 flex-1">{label}</span>
-                      <span className="text-xs font-bold" style={{ color: done ? '#00E5A0' : 'rgba(255,255,255,0.3)' }}>
-                        {done ? '✅ Done' : '⬜ Not yet'}
+                      <span className="text-sm font-bold flex-1" style={{ color: 'rgba(254,243,199,0.7)' }}>{label}</span>
+                      <span className="text-xs font-bold" style={{ color: done ? '#10B981' : 'rgba(255,255,255,0.3)' }}>
+                        {done ? t.parentDone : t.parentNotYet}
                       </span>
-                      {hs > 0 && <span className="text-kazakh-gold text-xs font-bold">🏆 {hs}</span>}
+                      {hs > 0 && <span className="text-xs font-bold" style={{ color: '#D97706' }}>{hs}</span>}
                     </div>
                   )
                 })}
@@ -164,33 +180,34 @@ export default function ParentMode() {
 
             {/* Screen time */}
             <div className="glass rounded-4xl p-4">
-              <h3 className="text-white/50 text-xs font-bold mb-2 uppercase tracking-wide">Screen Time Limit</h3>
+              <h3 className="text-xs font-bold mb-2 uppercase tracking-wide" style={{ color: 'rgba(254,243,199,0.45)' }}>{t.parentScreenLimit}</h3>
               <div className="flex items-center gap-3">
-                <span className="text-white font-black text-2xl">{screenTime} min</span>
+                <span className="font-black text-2xl" style={{ color: '#FEF3C7' }}>{t.parentScreenMin.replace('{min}', String(screenTime))}</span>
                 <input
                   type="range" min={15} max={180} step={15}
                   value={screenTime}
                   onChange={e => setScreenTime(Number(e.target.value))}
-                  className="flex-1 accent-kazakh-gold"
+                  className="flex-1"
+                  style={{ accentColor: '#EA580C' }}
                 />
               </div>
-              <p className="text-white/30 text-xs mt-1">Daily screen time limit (UI only)</p>
+              <p className="text-xs mt-1" style={{ color: 'rgba(254,243,199,0.28)' }}>{t.parentScreenHint}</p>
             </div>
 
             {/* Educational stats */}
             <div className="glass rounded-4xl p-4">
-              <h3 className="text-white/50 text-xs font-bold mb-3 uppercase tracking-wide">Learning Stats</h3>
+              <h3 className="text-xs font-bold mb-3 uppercase tracking-wide" style={{ color: 'rgba(254,243,199,0.45)' }}>{t.parentLearnStats}</h3>
               <div className="grid grid-cols-2 gap-3">
                 {[
-                  { label: 'Math Problems', val: '48+', icon: '🔢', color: '#00B4D8' },
-                  { label: 'Quiz Answers',  val: '30+', icon: '🗺️', color: '#F5A623' },
-                  { label: 'Memory Pairs',  val: '24+', icon: '🧠', color: '#00E5A0' },
-                  { label: 'Yurts Built',   val: completedGames.includes('yurt') ? '1' : '0', icon: '🏕️', color: '#FF6B35' },
+                  { label: t.parentStatMath,  val: '48+', icon: '🔢', color: '#0EA5E9' },
+                  { label: t.parentStatQuiz,  val: '30+', icon: '🗺️', color: '#D97706' },
+                  { label: t.parentStatPairs, val: '24+', icon: '🧠', color: '#10B981' },
+                  { label: t.parentStatYurts, val: completedGames.includes('yurt') ? '1' : '0', icon: '🏕️', color: '#EA580C' },
                 ].map(s => (
-                  <div key={s.label} className="rounded-3xl p-3 text-center" style={{ background: 'rgba(255,255,255,0.05)' }}>
+                  <div key={s.label} className="rounded-3xl p-3 text-center" style={{ background: 'rgba(107,26,26,0.3)', border: '1px solid rgba(234,88,12,0.15)' }}>
                     <span className="text-2xl">{s.icon}</span>
                     <p className="font-black text-xl mt-1" style={{ color: s.color }}>{s.val}</p>
-                    <p className="text-white/40 text-[10px] font-bold">{s.label}</p>
+                    <p className="text-[10px] font-bold" style={{ color: 'rgba(254,243,199,0.4)' }}>{s.label}</p>
                   </div>
                 ))}
               </div>
@@ -198,11 +215,11 @@ export default function ParentMode() {
 
             {/* Reset button */}
             <Button variant="ghost" fullWidth onClick={() => {
-              if (confirm('Reset all progress? This cannot be undone.')) {
+              if (confirm(t.parentResetConfirm)) {
                 reset(); setUnlocked(false); navigate('/splash')
               }
             }}>
-              🔄 Reset Child Progress
+              {t.parentResetBtn}
             </Button>
 
             <div className="h-4" />

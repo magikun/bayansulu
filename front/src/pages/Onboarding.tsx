@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { usePlayerStore } from '@/store/playerStore'
 import { avatars } from '@/data/mockData'
+import { getTranslation } from '@/data/locale'
 import Button from '@/components/ui/Button'
 import KamBot from '@/components/kambot/KamBot'
 import Confetti from '@/components/effects/Confetti'
@@ -11,19 +12,22 @@ import { slideInFromRight } from '@/hooks/useAnimation'
 const AGES = [7, 8, 9, 10, 11]
 
 export default function Onboarding() {
-  const navigate = useNavigate()
+  const navigate  = useNavigate()
+  const language  = usePlayerStore(s => s.language)
+  const t         = getTranslation(language)
   const { setName, setAge, setAvatar, completeOnboarding, unlockBadge, addCoins, addXP } = usePlayerStore()
 
-  const [step, setStep] = useState(1)
+  const [step, setStep]           = useState(1)
   const [localName, setLocalName] = useState('')
-  const [localAge, setLocalAge] = useState(8)
+  const [localAge, setLocalAge]   = useState(8)
   const [localAvatar, setLocalAvatar] = useState(0)
   const [showConfetti, setShowConfetti] = useState(false)
 
   const goNext = () => setStep(s => s + 1)
 
   const finish = () => {
-    setName(localName || 'Explorer')
+    const fallback = language === 'kk' ? 'Зерттеуші' : 'Исследователь'
+    setName(localName || fallback)
     setAge(localAge)
     setAvatar(localAvatar)
     completeOnboarding()
@@ -35,7 +39,10 @@ export default function Onboarding() {
   }
 
   return (
-    <div className="min-h-dvh bg-deep-navy flex flex-col relative overflow-hidden">
+    <div
+      className="min-h-dvh flex flex-col relative overflow-hidden"
+      style={{ background: '#0D0404' }}
+    >
       <Confetti active={showConfetti} />
 
       {/* Progress dots */}
@@ -45,8 +52,8 @@ export default function Onboarding() {
             key={s}
             className="rounded-full"
             animate={{
-              width: step === s ? 24 : 8,
-              background: step >= s ? '#F5A623' : 'rgba(255,255,255,0.2)',
+              width:      step === s ? 24 : 8,
+              background: step >= s ? '#EA580C' : 'rgba(255,255,255,0.2)',
             }}
             style={{ height: 8 }}
             transition={{ type: 'spring', stiffness: 400, damping: 25 }}
@@ -55,6 +62,7 @@ export default function Onboarding() {
       </div>
 
       <AnimatePresence mode="wait">
+        {/* ── Step 1: Name ── */}
         {step === 1 && (
           <motion.div
             key="step1"
@@ -63,14 +71,21 @@ export default function Onboarding() {
           >
             <KamBot mood="happy" size={110} className="animate-float" />
             <div className="text-center">
-              <h2 className="text-white font-black text-2xl mb-1">Hey there! 👋</h2>
-              <p className="text-white/60 font-bold text-sm">What's your name, explorer?</p>
+              <h2 className="font-black text-2xl mb-1" style={{ color: '#FEF3C7' }}>
+                {t.onboardHey}
+              </h2>
+              <p className="font-bold text-sm" style={{ color: 'rgba(254,243,199,0.55)' }}>
+                {t.onboardNameQuest}
+              </p>
             </div>
             <input
-              className="w-full text-center text-xl font-black text-white rounded-3xl px-5 py-4 outline-none
-                border-2 focus:border-kazakh-gold transition-colors"
-              style={{ background: 'rgba(255,255,255,0.08)', borderColor: localName ? '#F5A623' : 'rgba(255,255,255,0.18)' }}
-              placeholder="Type your name..."
+              className="w-full text-center text-xl font-black rounded-3xl px-5 py-4 outline-none border-2 transition-colors"
+              style={{
+                background:   'rgba(255,255,255,0.06)',
+                borderColor:  localName ? '#EA580C' : 'rgba(255,255,255,0.14)',
+                color:        '#FEF3C7',
+              }}
+              placeholder={t.onboardTypePlaceholder}
               value={localName}
               onChange={e => setLocalName(e.target.value)}
               maxLength={20}
@@ -81,11 +96,12 @@ export default function Onboarding() {
               disabled={localName.trim().length < 2}
               onClick={goNext}
             >
-              Let's go! →
+              {t.onboardLetsGo}
             </Button>
           </motion.div>
         )}
 
+        {/* ── Step 2: Age ── */}
         {step === 2 && (
           <motion.div
             key="step2"
@@ -94,8 +110,12 @@ export default function Onboarding() {
           >
             <KamBot mood="thinking" size={110} className="animate-float" />
             <div className="text-center">
-              <h2 className="text-white font-black text-2xl mb-1">How old are you, {localName}?</h2>
-              <p className="text-white/60 font-bold text-sm">Pick your age below</p>
+              <h2 className="font-black text-2xl mb-1" style={{ color: '#FEF3C7' }}>
+                {t.onboardHowOld.replace('{name}', localName)}
+              </h2>
+              <p className="font-bold text-sm" style={{ color: 'rgba(254,243,199,0.55)' }}>
+                {t.onboardPickAge}
+              </p>
             </div>
             <div className="flex gap-3">
               {AGES.map(age => (
@@ -103,10 +123,10 @@ export default function Onboarding() {
                   key={age}
                   className="w-14 h-14 rounded-full font-black text-lg flex items-center justify-center"
                   style={{
-                    background: localAge === age ? '#F5A623' : 'rgba(255,255,255,0.1)',
-                    color: localAge === age ? '#1A0A2E' : 'white',
-                    border: localAge === age ? '2px solid #FFD700' : '2px solid transparent',
-                    boxShadow: localAge === age ? '0 0 16px rgba(245,166,35,0.6)' : 'none',
+                    background: localAge === age ? '#EA580C' : 'rgba(255,255,255,0.08)',
+                    color:      localAge === age ? '#FEF3C7' : 'rgba(254,243,199,0.7)',
+                    border:     localAge === age ? '2px solid #D97706' : '2px solid transparent',
+                    boxShadow:  localAge === age ? '0 0 16px rgba(234,88,12,0.5)' : 'none',
                   }}
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
@@ -117,11 +137,12 @@ export default function Onboarding() {
               ))}
             </div>
             <Button variant="primary" size="lg" fullWidth onClick={goNext}>
-              That's me! →
+              {t.onboardThatIsMe}
             </Button>
           </motion.div>
         )}
 
+        {/* ── Step 3: Avatar ── */}
         {step === 3 && (
           <motion.div
             key="step3"
@@ -130,8 +151,12 @@ export default function Onboarding() {
           >
             <KamBot mood="idle" size={110} className="animate-float" />
             <div className="text-center">
-              <h2 className="text-white font-black text-2xl mb-1">Pick your avatar!</h2>
-              <p className="text-white/60 font-bold text-sm">Who do you want to be?</p>
+              <h2 className="font-black text-2xl mb-1" style={{ color: '#FEF3C7' }}>
+                {t.onboardPickAvatar}
+              </h2>
+              <p className="font-bold text-sm" style={{ color: 'rgba(254,243,199,0.55)' }}>
+                {t.onboardWhoWantBe}
+              </p>
             </div>
             <div className="grid grid-cols-3 gap-4 w-full max-w-xs">
               {avatars.map(av => (
@@ -145,22 +170,25 @@ export default function Onboarding() {
                   <div
                     className={`w-16 h-16 rounded-3xl flex items-center justify-center text-3xl ${av.bg}`}
                     style={{
-                      border: localAvatar === av.id ? '3px solid #FFD700' : '3px solid transparent',
-                      boxShadow: localAvatar === av.id ? '0 0 20px rgba(245,166,35,0.7)' : 'none',
+                      border:    localAvatar === av.id ? '3px solid #D97706' : '3px solid transparent',
+                      boxShadow: localAvatar === av.id ? '0 0 20px rgba(217,119,6,0.6)' : 'none',
                     }}
                   >
                     {av.emoji}
                   </div>
-                  <span className="text-white/70 text-xs font-bold">{av.label}</span>
+                  <span className="text-xs font-bold" style={{ color: 'rgba(254,243,199,0.65)' }}>
+                    {av.label}
+                  </span>
                 </motion.button>
               ))}
             </div>
             <Button variant="primary" size="lg" fullWidth onClick={goNext}>
-              This is me! →
+              {t.onboardThisIsMe}
             </Button>
           </motion.div>
         )}
 
+        {/* ── Step 4: Welcome ── */}
         {step === 4 && (
           <motion.div
             key="step4"
@@ -174,29 +202,39 @@ export default function Onboarding() {
               <KamBot mood="celebrate" size={140} />
             </motion.div>
             <div>
-              <h2 className="text-kazakh-gold font-black text-3xl mb-2">
-                Welcome, {localName}! 🎉
+              <h2 className="font-brand font-black text-3xl mb-2" style={{ color: '#D97706' }}>
+                {t.onboardWelcome.replace('{name}', localName)}
               </h2>
-              <p className="text-white/70 font-bold text-base leading-relaxed px-2">
-                I'm <span className="text-sky-blue font-black">KamBot</span> — your guide through Kazakhstan! 🇰🇿
+              <p className="font-bold text-base leading-relaxed px-2" style={{ color: 'rgba(254,243,199,0.75)' }}>
+                {t.onboardGuide}
                 <br />
-                <span className="text-kazakh-gold">+50 🪙 &amp; +30 ⭐ XP</span> just for joining!
+                <span style={{ color: '#D97706' }}>{t.onboardBonus}</span>
               </p>
             </div>
-            <div className="glass rounded-4xl p-4 w-full">
+            <div
+              className="rounded-3xl p-4 w-full"
+              style={{
+                background: 'rgba(107,26,26,0.4)',
+                border:     '1px solid rgba(234,88,12,0.2)',
+              }}
+            >
               <div className="flex items-center gap-3">
-                <div className={`w-12 h-12 rounded-full flex items-center justify-center text-2xl ${avatars[localAvatar]?.bg}`}>
+                <div
+                  className={`w-12 h-12 rounded-full flex items-center justify-center text-2xl ${avatars[localAvatar]?.bg}`}
+                >
                   {avatars[localAvatar]?.emoji}
                 </div>
                 <div className="text-left">
-                  <p className="text-white font-black">{localName}</p>
-                  <p className="text-white/50 text-sm">Age {localAge} · Explorer Lv.1</p>
+                  <p className="font-black" style={{ color: '#FEF3C7' }}>{localName}</p>
+                  <p className="text-sm" style={{ color: 'rgba(254,243,199,0.45)' }}>
+                    {t.onboardProfileAge.replace('{age}', String(localAge))}
+                  </p>
                 </div>
-                <div className="ml-auto text-kazakh-gold font-black">🪙 50</div>
+                <div className="ml-auto font-black" style={{ color: '#D97706' }}>50</div>
               </div>
             </div>
             <Button variant="primary" size="lg" fullWidth onClick={finish}>
-              🚀 Start Adventure!
+              {t.onboardStartBtn}
             </Button>
           </motion.div>
         )}

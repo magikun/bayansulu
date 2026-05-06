@@ -5,6 +5,12 @@ import { useState } from 'react'
 import Modal from '@/components/ui/Modal'
 import Button from '@/components/ui/Button'
 import type { MapLocation } from '@/types'
+import type { Language } from '@/data/locale'
+import { getTranslation } from '@/data/locale'
+
+interface KazakhstanMapProps {
+  language?: Language
+}
 
 // Simplified Kazakhstan border path (SVG coords scaled to 600×400 viewBox)
 const KZ_PATH = `
@@ -26,9 +32,10 @@ const CONNECT_PATH = locations
   .map((l, i) => `${i === 0 ? 'M' : 'L'} ${l.x * 6} ${l.y * 4}`)
   .join(' ')
 
-export default function KazakhstanMap() {
+export default function KazakhstanMap({ language = 'ru' }: KazakhstanMapProps) {
   const navigate = useNavigate()
   const [selected, setSelected] = useState<MapLocation | null>(null)
+  const t = getTranslation(language)
 
   return (
     <div className="relative w-full" style={{ aspectRatio: '6/4' }}>
@@ -53,16 +60,16 @@ export default function KazakhstanMap() {
         <path
           d={KZ_PATH}
           fill="url(#kzFill)"
-          stroke="#F5A623"
-          strokeWidth="2"
+          stroke="#EA580C"
+          strokeWidth="1.5"
           strokeLinejoin="round"
         />
 
         {/* Territory gradient */}
         <defs>
           <radialGradient id="kzFill" cx="50%" cy="50%" r="60%">
-            <stop offset="0%"   stopColor="#3D2A7A" stopOpacity="0.95" />
-            <stop offset="100%" stopColor="#2D1B69" stopOpacity="0.8" />
+            <stop offset="0%"   stopColor="#3D0C0C" stopOpacity="0.95" />
+            <stop offset="100%" stopColor="#1A0505" stopOpacity="0.9" />
           </radialGradient>
           <filter id="pinGlow">
             <feGaussianBlur stdDeviation="2" result="blur" />
@@ -74,20 +81,20 @@ export default function KazakhstanMap() {
         <path
           d={KZ_PATH}
           fill="none"
-          stroke="#F5A623"
+          stroke="#D97706"
           strokeWidth="0.5"
-          opacity="0.25"
+          opacity="0.3"
           strokeDasharray="3 6"
         />
 
         {/* Dotted connection path */}
         <path
           d={CONNECT_PATH}
-          stroke="#F5A623"
-          strokeWidth="1.8"
+          stroke="#D97706"
+          strokeWidth="1.5"
           strokeDasharray="5 5"
           fill="none"
-          opacity="0.35"
+          opacity="0.4"
         />
 
         {/* Location pins */}
@@ -105,21 +112,35 @@ export default function KazakhstanMap() {
         {selected && (
           <div className="text-center">
             <div className="text-5xl mb-3">{selected.icon}</div>
-            <h2 className="text-white font-black text-2xl mb-1">{selected.name}</h2>
-            <p className="text-white/50 text-sm font-bold mb-1">{selected.nameKk}</p>
-            <p className="text-white/70 text-sm mb-5">{selected.description}</p>
+            <h2
+              className="font-black text-2xl mb-1"
+              style={{ color: '#FEF3C7' }}
+            >
+              {language === 'kk' ? selected.nameKk : selected.name}
+            </h2>
+            {language === 'ru' && (
+              <p className="text-sm font-bold mb-1" style={{ color: 'rgba(254,243,199,0.45)' }}>
+                {selected.nameKk}
+              </p>
+            )}
+            <p className="text-sm mb-5" style={{ color: 'rgba(254,243,199,0.65)' }}>
+              {language === 'kk'
+                ? (selected.descriptionKk ?? selected.description)
+                : selected.description}
+            </p>
             <Button
               variant="primary"
               fullWidth
               onClick={() => { setSelected(null); navigate(selected.game) }}
             >
-              🎮 Play Here!
+              {t.mapPlayBtn}
             </Button>
             <button
-              className="mt-3 text-white/40 text-sm font-bold w-full"
+              className="mt-3 text-sm font-bold w-full"
+              style={{ color: 'rgba(254,243,199,0.35)' }}
               onClick={() => setSelected(null)}
             >
-              Maybe later
+              {t.mapLater}
             </button>
           </div>
         )}

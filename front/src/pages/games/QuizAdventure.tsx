@@ -7,15 +7,18 @@ import Modal from '@/components/ui/Modal'
 import Confetti from '@/components/effects/Confetti'
 import { getRandomQuestions } from '@/data/quizQuestions'
 import { usePlayerStore } from '@/store/playerStore'
+import { getTranslation } from '@/data/locale'
 import type { QuizQuestion, KamBotMood } from '@/types'
 
 type Phase = 'dialogue' | 'question' | 'result' | 'complete'
 
 export default function QuizAdventure() {
-  const addCoins = usePlayerStore(s => s.addCoins)
-  const addXP = usePlayerStore(s => s.addXP)
+  const addCoins    = usePlayerStore(s => s.addCoins)
+  const addXP       = usePlayerStore(s => s.addXP)
   const completeGame = usePlayerStore(s => s.completeGame)
   const unlockBadge = usePlayerStore(s => s.unlockBadge)
+  const language    = usePlayerStore(s => s.language)
+  const t           = getTranslation(language)
 
   const [questions]   = useState<QuizQuestion[]>(getRandomQuestions(10))
   const [qIdx, setQIdx]   = useState(0)
@@ -82,7 +85,7 @@ export default function QuizAdventure() {
   }
 
   return (
-    <GameLayout title="Kazakhstan Explorer 🗺️" kambot={{ show: false }}>
+    <GameLayout title={t.gameTitleQuiz} kambot={{ show: false }}>
       <Confetti active={confetti} />
 
       <div className="px-3 pb-3 flex flex-col gap-3">

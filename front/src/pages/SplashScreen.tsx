@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import KamBot from '@/components/kambot/KamBot'
 import Particles from '@/components/effects/Particles'
-import { splashVariants, staggerContainer, staggerItem } from '@/hooks/useAnimation'
+import { splashVariants } from '@/hooks/useAnimation'
 import { usePlayerStore } from '@/store/playerStore'
 
 export default function SplashScreen() {
@@ -19,92 +19,115 @@ export default function SplashScreen() {
 
   return (
     <motion.div
-      className="min-h-dvh bg-deep-navy flex flex-col items-center justify-center relative overflow-hidden"
+      className="min-h-dvh flex flex-col relative overflow-hidden"
+      style={{ background: '#0D0404' }}
       variants={splashVariants}
       initial="initial"
       animate="animate"
       exit="exit"
       onClick={() => navigate(onboardingComplete ? '/map' : '/onboarding')}
     >
-      {/* Background gradient rings */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full"
-          style={{ background: 'radial-gradient(circle, rgba(245,166,35,0.12) 0%, transparent 70%)' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full"
-          style={{ background: 'radial-gradient(circle, rgba(0,180,216,0.1) 0%, transparent 70%)' }} />
+      {/* Radial heat haze in the upper half */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            'radial-gradient(ellipse 70% 50% at 60% 30%, rgba(153,27,27,0.22) 0%, transparent 70%),' +
+            'radial-gradient(ellipse 40% 40% at 30% 70%, rgba(217,119,6,0.10) 0%, transparent 65%)',
+        }}
+      />
+
+      <Particles count={18} />
+
+      {/* Asymmetric two-zone layout */}
+      <div className="flex flex-col flex-1 justify-between px-6 pt-14 pb-10 z-10">
+
+        {/* Top: KamBot + brand text side by side */}
+        <div className="flex items-center gap-5">
+          <motion.div
+            className="animate-float shrink-0"
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.15, type: 'spring', stiffness: 220, damping: 20 }}
+          >
+            <KamBot mood="happy" size={110} />
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3, type: 'spring', stiffness: 220, damping: 20 }}
+          >
+            <p
+              className="text-[10px] font-black tracking-[0.35em] uppercase mb-1"
+              style={{ color: 'rgba(217,119,6,0.6)' }}
+            >
+              Kazakhstan
+            </p>
+            <h1
+              className="font-brand leading-none"
+              style={{
+                fontSize: 38,
+                color: '#FEF3C7',
+                letterSpacing: '-0.02em',
+                lineHeight: 0.95,
+              }}
+            >
+              BAYAN<br />
+              <span style={{ color: '#EA580C' }}>SULU</span>
+            </h1>
+            <p
+              className="text-xs font-bold mt-2 leading-relaxed"
+              style={{ color: 'rgba(254,243,199,0.45)' }}
+            >
+              Исследуй Казахстан через<br />
+              игры и приключения
+            </p>
+          </motion.div>
+        </div>
+
+        {/* Middle spacer */}
+        <div />
+
+        {/* Bottom: loading dots + tap hint */}
+        <motion.div
+          className="flex flex-col items-start gap-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+        >
+          {/* Three staggered loading bars instead of dots */}
+          <div className="flex gap-1.5 items-end h-4">
+            {[0, 1, 2, 3].map(i => (
+              <motion.div
+                key={i}
+                className="rounded-full"
+                style={{ width: 4, background: '#EA580C' }}
+                animate={{ height: [8, 16, 8] }}
+                transition={{
+                  duration: 0.9,
+                  delay: i * 0.15,
+                  repeat: Infinity,
+                  ease: 'easeInOut',
+                }}
+              />
+            ))}
+          </div>
+
+          <p
+            className="text-[10px] font-bold tracking-widest uppercase"
+            style={{ color: 'rgba(254,243,199,0.28)' }}
+          >
+            Нажми чтобы начать
+          </p>
+        </motion.div>
       </div>
 
-      <Particles count={22} />
-
-      <motion.div
-        className="flex flex-col items-center gap-6 z-10"
-        variants={staggerContainer}
-        initial="initial"
-        animate="animate"
-      >
-        {/* KamBot mascot */}
-        <motion.div variants={staggerItem} className="animate-float">
-          <KamBot mood="happy" size={140} />
-        </motion.div>
-
-        {/* Logo */}
-        <motion.div variants={staggerItem} className="text-center">
-          <div className="flex items-center justify-center gap-1">
-            <span
-              className="font-black leading-none"
-              style={{ fontSize: 52, background: 'linear-gradient(135deg, #F5A623, #FFD700)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
-            >
-              BAYAN
-            </span>
-            <span
-              className="font-black leading-none"
-              style={{ fontSize: 52, background: 'linear-gradient(135deg, #00B4D8, #48CAE4)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
-            >
-              SULU
-            </span>
-          </div>
-          <motion.div
-            className="text-white/70 font-black tracking-[0.3em] text-sm mt-1 uppercase"
-            variants={staggerItem}
-          >
-            Kids 🇰🇿
-          </motion.div>
-        </motion.div>
-
-        {/* Tagline */}
-        <motion.p
-          variants={staggerItem}
-          className="text-white/50 text-center font-bold text-sm px-8 leading-relaxed"
-        >
-          Explore Kazakhstan through{'\n'}
-          <span className="text-kazakh-gold">games, adventures & fun!</span>
-        </motion.p>
-
-        {/* Loading dots */}
-        <motion.div
-          variants={staggerItem}
-          className="flex gap-2 mt-2"
-        >
-          {[0, 1, 2].map(i => (
-            <motion.div
-              key={i}
-              className="w-2 h-2 rounded-full bg-kazakh-gold"
-              animate={{ scale: [1, 1.5, 1], opacity: [0.4, 1, 0.4] }}
-              transition={{ duration: 0.8, delay: i * 0.2, repeat: Infinity }}
-            />
-          ))}
-        </motion.div>
-      </motion.div>
-
-      {/* Tap hint */}
-      <motion.p
-        className="absolute bottom-8 text-white/25 text-xs font-bold"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-      >
-        Tap anywhere to start
-      </motion.p>
+      {/* Bottom-right: KZ flag accent strip */}
+      <div
+        className="absolute bottom-0 right-0 w-24 h-1.5 rounded-tl-full"
+        style={{ background: 'linear-gradient(90deg, transparent, #DC2626, #EA580C)' }}
+      />
     </motion.div>
   )
 }

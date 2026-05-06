@@ -6,6 +6,7 @@ import Button from '@/components/ui/Button'
 import Modal from '@/components/ui/Modal'
 import { usePlayerStore } from '@/store/playerStore'
 import { useGameStore } from '@/store/gameStore'
+import { getTranslation } from '@/data/locale'
 
 type ObstacleType = { id: number; x: number; icon: string; height: 'low' | 'high'; speed: number }
 type CoinType     = { id: number; x: number; y: number }
@@ -26,10 +27,12 @@ const OBSTACLES = [
 let idCounter = 0
 
 export default function CamelRunner() {
-  const addCoins = usePlayerStore(s => s.addCoins)
-  const addXP = usePlayerStore(s => s.addXP)
+  const addCoins    = usePlayerStore(s => s.addCoins)
+  const addXP       = usePlayerStore(s => s.addXP)
   const completeGame = usePlayerStore(s => s.completeGame)
   const unlockBadge = usePlayerStore(s => s.unlockBadge)
+  const language    = usePlayerStore(s => s.language)
+  const t           = getTranslation(language)
   const setHighScore = useGameStore(s => s.setHighScore)
 
   const [phase, setPhase]     = useState<'idle' | 'playing' | 'dead'>('idle')
@@ -169,7 +172,7 @@ export default function CamelRunner() {
   const theme = THEMES[themeIdx]
 
   return (
-    <GameLayout title="Camel Runner 🐪" kambot={{ show: false }}>
+    <GameLayout title={t.gameTitleRunner} kambot={{ show: false }}>
       {/* Game viewport */}
       <div
         className={`relative mx-3 rounded-4xl overflow-hidden bg-gradient-to-b ${theme.bg} select-none`}
@@ -282,7 +285,7 @@ export default function CamelRunner() {
         <div className="text-center">
           <div className="mb-3"><KamBot mood="sad" size={90} /></div>
           <h2 className="text-white font-black text-2xl mb-1">Oops! 💨</h2>
-          <p className="text-white/60 mb-1 font-bold">Score: <span className="text-kazakh-gold">{score}</span></p>
+          <p className="font-bold mb-1" style={{ color: 'rgba(254,243,199,0.6)' }}>{t.gameScore}: <span style={{ color: '#D97706' }}>{score}</span></p>
           <p className="text-white/60 mb-5 font-bold">Coins: <span className="text-kazakh-gold">+{coins} 🪙</span></p>
           <Button variant="primary" fullWidth onClick={() => {
             addCoins(coins)

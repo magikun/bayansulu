@@ -31,6 +31,7 @@ export const localeData = {
     onboardGuide: 'Я КамБот — твой верный проводник по Казахстану! 🇰🇿',
     onboardBonus: '+50 🪙 и +30 ⭐ опыта за регистрацию!',
     onboardStartBtn: '🚀 Начать приключение!',
+    onboardProfileAge: 'Возраст {age} · Уровень 1',
 
     // Rewards
     rewardsTitle: 'Центр Наград',
@@ -65,6 +66,10 @@ export const localeData = {
     parentStatYurts: 'Построенные юрты',
     parentResetBtn: '🔄 Сбросить весь прогресс',
     parentResetConfirm: 'Вы уверены, что хотите сбросить весь прогресс? Это действие невозможно отменить.',
+    parentDone: 'Пройдено',
+    parentNotYet: 'Ещё нет',
+    parentBadgesEarned: '{count} значков',
+    parentLevelLabel: 'Уровень {level}',
 
     // Prize Shop
     shopTitle: '🛍️ Магазин сладостей «Бота»',
@@ -78,12 +83,28 @@ export const localeData = {
     shopCouponCode: 'Код купона:',
     shopNoCoupons: 'У тебя пока нет купленных купонов. Играй в игры, чтобы заработать Ботакоины! 🪙',
 
+    // Game titles
+    gameTitleMemory: 'Собери сладости',
+    gameTitleRunner: 'Верблюд-Бегун',
+    gameTitleMath:   'Счёт с Ботой',
+    gameTitleQuiz:   'Викторина КамБота',
+    gameTitleYurt:   'Сборка Юрты',
+
+    // WorldMap
+    mapTitle: 'Карта Казахстана',
+    mapSubtitle: 'Выбери город для игры',
+    mapWelcome: 'С возвращением,',
+    mapWelcomeFallback: 'Привет, исследователь!',
+    mapExplore: '5 городов ждут тебя',
+    mapPlayBtn: 'Играть здесь!',
+    mapLater: 'Может быть потом',
+
     // Common Game buttons
-    gamePlayAgain: 'Играть снова! 🔄',
-    gameTryAgain: 'Попробовать ещё раз! 💪',
-    gameComplete: 'Отлично! 🎉',
+    gamePlayAgain: 'Играть снова!',
+    gameTryAgain: 'Попробовать ещё раз!',
+    gameComplete: 'Отлично!',
     gameWon: 'Победа!',
-    gameTimesUp: 'Время вышло! ⏰',
+    gameTimesUp: 'Время вышло!',
     gameScore: 'Счёт',
     gameLives: 'Жизни',
   },
@@ -119,6 +140,7 @@ export const localeData = {
     onboardGuide: 'Мен КамБот — Қазақстан бойынша сенің сенімді жолбасшыңмын! 🇰🇿',
     onboardBonus: 'Тіркелгенің үшін +50 🪙 және +30 ⭐ тәжірибе!',
     onboardStartBtn: '🚀 Саяхатты бастау!',
+    onboardProfileAge: 'Жас {age} · 1 деңгей',
 
     // Rewards
     rewardsTitle: 'Жүлделер Орталығы',
@@ -153,6 +175,10 @@ export const localeData = {
     parentStatYurts: 'Құрылған киіз үйлер',
     parentResetBtn: '🔄 Барлық прогресті жою',
     parentResetConfirm: 'Барлық прогресті өшіргіңіз келе ме? Бұл әрекетті кері қайтару мүмкін емес.',
+    parentDone: 'Аяқталды',
+    parentNotYet: 'Әлі жоқ',
+    parentBadgesEarned: '{count} белгі',
+    parentLevelLabel: '{level} деңгей',
 
     // Prize Shop
     shopTitle: '🛍️ «Бота» тәттілер дүкені',
@@ -166,12 +192,28 @@ export const localeData = {
     shopCouponCode: 'Купон коды:',
     shopNoCoupons: 'Сізде әлі сатып алынған купондар жоқ. Ботакоиндар табу үшін ойындар ойнаңыз! 🪙',
 
+    // Game titles
+    gameTitleMemory: 'Тәттілерді жина',
+    gameTitleRunner: 'Түйе жүгіруші',
+    gameTitleMath:   'Ботамен санау',
+    gameTitleQuiz:   'КамБот викторинасы',
+    gameTitleYurt:   'Киіз үй құрау',
+
+    // WorldMap
+    mapTitle: 'Қазақстан картасы',
+    mapSubtitle: 'Ойнау үшін қала таңда',
+    mapWelcome: 'Қайта оралдың,',
+    mapWelcomeFallback: 'Сәлем, зерттеуші!',
+    mapExplore: '5 қала сені күтеді',
+    mapPlayBtn: 'Осында ойна!',
+    mapLater: 'Кейінірек',
+
     // Common Game buttons
-    gamePlayAgain: 'Қайта ойнау! 🔄',
-    gameTryAgain: 'Қайтадан көру! 💪',
-    gameComplete: 'Керемет! 🎉',
+    gamePlayAgain: 'Қайта ойнау!',
+    gameTryAgain: 'Қайтадан байқа!',
+    gameComplete: 'Керемет!',
     gameWon: 'Жеңіс!',
-    gameTimesUp: 'Уақыт бітті! ⏰',
+    gameTimesUp: 'Уақыт бітті!',
     gameScore: 'Ұпай',
     gameLives: 'Өмірлер',
   },

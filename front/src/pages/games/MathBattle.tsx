@@ -6,6 +6,7 @@ import Button from '@/components/ui/Button'
 import Modal from '@/components/ui/Modal'
 import Confetti from '@/components/effects/Confetti'
 import { usePlayerStore } from '@/store/playerStore'
+import { getTranslation } from '@/data/locale'
 import type { MathProblem, KamBotMood } from '@/types'
 
 // ── Math generation ──────────────────────────────────────────────────────────
@@ -43,10 +44,12 @@ const ENEMIES = ['🍭', '🍬', '🍫', '🧁', '🍡', '🍦']
 const BOSS    = '🎃'
 
 export default function MathBattle() {
-  const addCoins = usePlayerStore(s => s.addCoins)
-  const addXP = usePlayerStore(s => s.addXP)
+  const addCoins    = usePlayerStore(s => s.addCoins)
+  const addXP       = usePlayerStore(s => s.addXP)
   const completeGame = usePlayerStore(s => s.completeGame)
   const unlockBadge = usePlayerStore(s => s.unlockBadge)
+  const language    = usePlayerStore(s => s.language)
+  const t           = getTranslation(language)
 
   const [phase, setPhase]     = useState<'idle' | 'playing' | 'dead'>('idle')
   const [problem, setProblem] = useState<MathProblem>(genProblem(1))
@@ -167,7 +170,7 @@ export default function MathBattle() {
   }
 
   return (
-    <GameLayout title="Math Battle! 🍭" kambot={{ show: false }}>
+    <GameLayout title={t.gameTitleMath} kambot={{ show: false }}>
       <Confetti active={confetti} />
 
       <div className="px-3 pb-3 flex flex-col gap-3">
@@ -319,7 +322,7 @@ export default function MathBattle() {
         <div className="text-center">
           <div className="mb-3"><KamBot mood="sad" size={90} /></div>
           <h2 className="text-white font-black text-2xl mb-1">Game Over! 💀</h2>
-          <p className="text-white/60 mb-1 font-bold">Score: <span className="text-kazakh-gold">{score}</span></p>
+          <p className="font-bold mb-1" style={{ color: 'rgba(254,243,199,0.6)' }}>{t.gameScore}: <span style={{ color: '#D97706' }}>{score}</span></p>
           <p className="text-white/60 mb-1 font-bold">Level: <span className="text-sky-blue">{level}</span></p>
           <p className="text-kazakh-gold font-black mb-5">+{score} 🪙 added!</p>
           <Button variant="primary" fullWidth onClick={start}>Try Again! 💪</Button>

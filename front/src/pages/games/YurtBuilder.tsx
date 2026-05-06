@@ -7,25 +7,30 @@ import Modal from '@/components/ui/Modal'
 import Confetti from '@/components/effects/Confetti'
 import { yurtPieces, yurtDecorations } from '@/data/mockData'
 import { usePlayerStore } from '@/store/playerStore'
+import { getTranslation } from '@/data/locale'
 import type { KamBotMood } from '@/types'
 
-const KAMBOT_MSGS: Record<string, string> = {
-  base:   'Great foundation! 🏗️',
-  walls:  "It's taking shape! 🌟",
-  crown:  'Almost there! Keep going! ⚡',
-  felt:   'So cozy and warm! 🤗',
-  door:   'AMAZING! Your yurt is complete! 🎉',
+const KAMBOT_MSGS: Record<string, { ru: string; kk: string }> = {
+  base:  { ru: 'Отличное основание!',        kk: 'Тамаша негіз!' },
+  walls: { ru: 'Форма появляется!',          kk: 'Пішін пайда болуда!' },
+  crown: { ru: 'Почти готово! Давай!',       kk: 'Аз қалды! Жалғастыр!' },
+  felt:  { ru: 'Так тепло и уютно!',         kk: 'Қандай жылы және жайлы!' },
+  door:  { ru: 'Юрта готова! Поздравляю!',  kk: 'Киіз үй дайын! Құттықтаймын!' },
 }
 
 export default function YurtBuilder() {
-  const addCoins = usePlayerStore(s => s.addCoins)
-  const addXP = usePlayerStore(s => s.addXP)
+  const addCoins    = usePlayerStore(s => s.addCoins)
+  const addXP       = usePlayerStore(s => s.addXP)
   const completeGame = usePlayerStore(s => s.completeGame)
   const unlockBadge = usePlayerStore(s => s.unlockBadge)
+  const language    = usePlayerStore(s => s.language)
+  const t           = getTranslation(language)
+
+  const initMsg = language === 'kk' ? 'Киіз үй жасау үшін бөліктерді сүйрет!' : 'Перетаскивай детали, чтобы собрать юрту!'
 
   const [placed, setPlaced]         = useState<Set<string>>(new Set())
   const [decorations, setDecorations] = useState<Set<string>>(new Set())
-  const [kamMsg, setKamMsg]         = useState('Drag pieces to build your yurt! 🏕️')
+  const [kamMsg, setKamMsg]         = useState(initMsg)
   const [kamMood, setKamMood]       = useState<KamBotMood>('idle')
   const [complete, setComplete]     = useState(false)
   const [confetti, setConfetti]     = useState(false)
@@ -38,7 +43,7 @@ export default function YurtBuilder() {
     const newPlaced = new Set(placed)
     newPlaced.add(id)
     setPlaced(newPlaced)
-    setKamMsg(KAMBOT_MSGS[id])
+    setKamMsg(KAMBOT_MSGS[id][language])
     setKamMood(id === 'door' ? 'celebrate' : 'happy')
 
     if (id === 'door') {
@@ -63,12 +68,12 @@ export default function YurtBuilder() {
 
   const reset = () => {
     setPlaced(new Set()); setDecorations(new Set())
-    setKamMsg('Drag pieces to build your yurt! 🏕️')
+    setKamMsg(initMsg)
     setKamMood('idle'); setComplete(false); setConfetti(false)
   }
 
   return (
-    <GameLayout title="Build the Yurt 🏕️" kambot={{ show: false }}>
+    <GameLayout title={t.gameTitleYurt} kambot={{ show: false }}>
       <Confetti active={confetti} />
 
       <div className="px-3 pb-3 flex flex-col gap-3">

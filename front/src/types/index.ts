@@ -25,6 +25,7 @@ export interface MapLocation {
   y: number
   game: string      // route path
   description: string
+  descriptionKk?: string
   color: string
   unlocked: boolean
 }

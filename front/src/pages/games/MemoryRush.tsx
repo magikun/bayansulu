@@ -8,6 +8,7 @@ import Confetti from '@/components/effects/Confetti'
 import FloatingCoins from '@/components/effects/FloatingCoins'
 import { memoryCardTypes } from '@/data/mockData'
 import { usePlayerStore } from '@/store/playerStore'
+import { getTranslation } from '@/data/locale'
 import { useGameStore } from '@/store/gameStore'
 import type { MemoryCard } from '@/types'
 
@@ -24,10 +25,12 @@ function buildDeck(): MemoryCard[] {
 }
 
 export default function MemoryRush() {
-  const addCoins = usePlayerStore(s => s.addCoins)
-  const addXP = usePlayerStore(s => s.addXP)
+  const addCoins    = usePlayerStore(s => s.addCoins)
+  const addXP       = usePlayerStore(s => s.addXP)
   const completeGame = usePlayerStore(s => s.completeGame)
   const unlockBadge = usePlayerStore(s => s.unlockBadge)
+  const language    = usePlayerStore(s => s.language)
+  const t           = getTranslation(language)
   const setHighScore = useGameStore(s => s.setHighScore)
 
   const [cards, setCards] = useState<MemoryCard[]>(buildDeck)
@@ -131,7 +134,7 @@ export default function MemoryRush() {
   const timerColor = timerPct > 50 ? '#00E5A0' : timerPct > 25 ? '#F5A623' : '#FF4D9E'
 
   return (
-    <GameLayout title="Sweet Memory Rush 🍬" kambot={{ mood: combo >= 3 ? 'celebrate' : 'happy', show: false }}>
+    <GameLayout title={t.gameTitleMemory} kambot={{ mood: combo >= 3 ? 'celebrate' : 'happy', show: false }}>
       <Confetti active={confetti} />
 
       <div className="px-3 pb-3">
@@ -207,7 +210,7 @@ export default function MemoryRush() {
         <div className="text-center">
           <div className="mb-4"><KamBot mood="celebrate" size={100} /></div>
           <h2 className="text-kazakh-gold font-black text-2xl mb-1">You Won! 🎉</h2>
-          <p className="text-white/60 font-bold mb-4">Score: <span className="text-kazakh-gold">{score}</span></p>
+          <p className="font-bold mb-4" style={{ color: 'rgba(254,243,199,0.6)' }}>{t.gameScore}: <span style={{ color: '#D97706' }}>{score}</span></p>
           <p className="text-white font-bold text-sm mb-5">+{score} 🪙 +60 ⭐ added to your account!</p>
           <Button variant="primary" fullWidth onClick={restart}>Play Again 🔄</Button>
         </div>
