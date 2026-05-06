@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { SpeakerHigh } from '@phosphor-icons/react'
 import { useSpeech } from '@/hooks/useSpeech'
 
@@ -10,12 +10,27 @@ interface KamBotBubbleProps {
 }
 
 export default function KamBotBubble({ message, visible, side = 'right' }: KamBotBubbleProps) {
-  const { speak } = useSpeech()
+  const { speak, stop } = useSpeech()
+  const lastSpokenRef = useRef<string>('')
 
   // Auto-speak when bubble becomes visible
   useEffect(() => {
-    if (visible && message) speak(message)
-  }, [message, visible, speak])
+    if (visible) {
+      if (message && message !== lastSpokenRef.current) {
+        speak(message)
+        lastSpokenRef.current = message
+      }
+    } else {
+      // Clear last spoken ref and stop audio when the bubble goes invisible
+      lastSpokenRef.current = ''
+      stop()
+    }
+
+    // Stop audio on cleanup to prevent overlapping sounds
+    return () => {
+      stop()
+    }
+  }, [message, visible, speak, stop])
 
   return (
     <AnimatePresence>

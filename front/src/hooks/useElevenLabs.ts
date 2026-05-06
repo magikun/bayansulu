@@ -89,6 +89,13 @@ export function useElevenLabs() {
       }
 
       const blob  = await res.blob()
+
+      // Cancellation guard: if stop was called or a different speak request took over during fetch
+      if (clean !== lastTextRef.current) {
+        console.log('[ElevenLabs] speech request cancelled during fetch for:', clean.slice(0, 30))
+        return
+      }
+
       const url   = URL.createObjectURL(blob)
       const audio = new Audio(url)
       audioRef.current = audio
@@ -113,6 +120,7 @@ export function useElevenLabs() {
   }, [soundMuted])
 
   const stop = useCallback(() => {
+    lastTextRef.current = '' // Reset currently playing/requested text
     if (audioRef.current) {
       audioRef.current.pause()
       URL.revokeObjectURL(audioRef.current.src)
