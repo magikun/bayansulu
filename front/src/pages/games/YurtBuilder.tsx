@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import GameLayout from '@/components/layout/GameLayout'
 import KamBot from '@/components/kambot/KamBot'
@@ -16,7 +16,7 @@ const LOCAL_TRANS: Record<string, { ru: string; kk: string }> = {
   yurtTitle: { ru: 'Юрта построена! 🏕️', kk: 'Киіз үй құрылды! 🏕️' },
   yurtSuccess: { ru: 'Твоя прекрасная юрта готова! Нажми кнопку ниже, чтобы начать украшать её!', kk: 'Сенің керемет киіз үйің дайын! Оны безендіру үшін төмендегі батырманы бас!' },
   decorTitle: { ru: '🎨 Укрась свою юрту!', kk: '🎨 Киіз үйді безендір!' },
-  buildPiecesTitle: { ru: '🏗️ Детали сборки (собирай по порядку)', kk: '🏗️ Құрастыру бөліктері (ретімен жина)' }
+  buildPiecesTitle: { ru: '🏗️ Перетащи детали на юрту (собирай по порядку)', kk: '🏗️ Киіз үй бөлшектерін сүйреп әкел (ретімен жина)' }
 }
 
 const KAMBOT_MSGS: Record<string, { ru: string; kk: string }> = {
@@ -43,6 +43,9 @@ export default function YurtBuilder() {
   const [kamMood, setKamMood]       = useState<KamBotMood>('idle')
   const [complete, setComplete]     = useState(false)
   const [confetti, setConfetti]     = useState(false)
+  
+  const [isDragging, setIsDragging] = useState(false)
+  const yurtPreviewRef = useRef<HTMLDivElement | null>(null)
 
   const requiredOrder = yurtPieces.map(p => p.id)
   const nextRequired  = requiredOrder.find(id => !placed.has(id))
@@ -64,6 +67,16 @@ export default function YurtBuilder() {
       }, 900)
     } else {
       setTimeout(() => setKamMood('idle'), 1500)
+    }
+  }
+
+  const handleDragEnd = (id: string, event: any, info: any) => {
+    if (!yurtPreviewRef.current) return
+    const rect = yurtPreviewRef.current.getBoundingClientRect()
+    const { x, y } = info.point
+    const inside = x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom
+    if (inside) {
+      handlePieceDrop(id)
     }
   }
 
@@ -95,7 +108,16 @@ export default function YurtBuilder() {
         </div>
 
         {/* Yurt preview */}
-        <div className="glass rounded-4xl p-4">
+        <div
+          ref={yurtPreviewRef}
+          className="glass rounded-4xl p-4 transition-all duration-300"
+          style={{
+            boxShadow: isDragging ? '0 0 20px rgba(245, 166, 35, 0.3)' : 'none',
+            borderColor: isDragging ? 'rgba(245, 166, 35, 0.5)' : 'rgba(255, 255, 255, 0.08)',
+            borderWidth: 2,
+            borderStyle: isDragging ? 'dashed' : 'solid',
+          }}
+        >
           <p className="text-white/50 text-xs font-bold mb-3 text-center">Your Yurt</p>
           <div className="relative mx-auto animate-float" style={{ width: 180, height: 160 }}>
             {/* Base ring */}
@@ -178,21 +200,30 @@ export default function YurtBuilder() {
               const isNext = p.id === nextRequired
               const isDone = placed.has(p.id)
               return (
-                <motion.button
+                <motion.div
                   key={p.id}
-                  className="flex flex-col items-center gap-1 rounded-2xl p-2 shrink-0 min-w-[56px]"
+                  className="flex flex-col items-center gap-1 rounded-2xl p-2 shrink-0 min-w-[56px] select-none touch-none"
                   style={{
                     background: isDone ? 'rgba(0,229,160,0.15)' : isNext ? 'rgba(245,166,35,0.2)' : 'rgba(255,255,255,0.05)',
                     border: isDone ? '2px solid #00E5A0' : isNext ? '2px solid #F5A623' : '2px solid transparent',
                     opacity: !isDone && !isNext && idx > (placed.size) ? 0.4 : 1,
+                    cursor: isNext ? 'grab' : 'default',
+                    zIndex: isDragging && isNext ? 50 : 10,
+                  }}
+                  drag={isNext}
+                  dragSnapToOrigin
+                  onDragStart={() => isNext && setIsDragging(true)}
+                  onDragEnd={(event, info) => {
+                    setIsDragging(false)
+                    if (isNext) handleDragEnd(p.id, event, info)
                   }}
                   whileHover={isNext ? { scale: 1.08 } : {}}
-                  whileTap={isNext ? { scale: 0.9 } : {}}
-                  onClick={() => isNext && handlePieceDrop(p.id)}
+                  whileTap={isNext ? { scale: 0.92, cursor: 'grabbing' } : {}}
+                  onTap={() => isNext && handlePieceDrop(p.id)}
                 >
                   <span className="text-2xl">{isDone ? '✅' : p.icon}</span>
                   <span className="text-[9px] font-bold text-white/60 text-center leading-tight">{p.label}</span>
-                </motion.button>
+                </motion.div>
               )
             })}
           </div>
