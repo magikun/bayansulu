@@ -10,6 +10,7 @@ import Onboarding    from '@/pages/Onboarding'
 import WorldMap      from '@/pages/WorldMap'
 import RewardHub     from '@/pages/RewardHub'
 import ParentMode    from '@/pages/ParentMode'
+import GamesLobby    from '@/pages/GamesLobby'
 import MemoryRush    from '@/pages/games/MemoryRush'
 import CamelRunner   from '@/pages/games/CamelRunner'
 import YurtBuilder   from '@/pages/games/YurtBuilder'
@@ -28,6 +29,7 @@ function AnimatedRoutes() {
         <Route path="/map"          element={onboardingComplete ? <WorldMap /> : <Navigate to="/onboarding" />} />
         <Route path="/rewards"      element={<RewardHub />} />
         <Route path="/parent"       element={<ParentMode />} />
+        <Route path="/games"        element={<GamesLobby />} />
         <Route path="/games/memory" element={<MemoryRush />} />
         <Route path="/games/runner" element={<CamelRunner />} />
         <Route path="/games/yurt"   element={<YurtBuilder />} />

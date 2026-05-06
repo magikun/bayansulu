@@ -81,3 +81,22 @@ export interface RunnerObstacle {
   icon: string
   height: 'low' | 'high'
 }
+
+export interface Coupon {
+  id: string
+  prizeId: string
+  code: string
+  purchasedAt: string
+  used: boolean
+}
+
+export interface PrizeProduct {
+  id: string
+  nameRu: string
+  nameKk: string
+  cost: number
+  emoji: string
+  descriptionRu: string
+  descriptionKk: string
+  discountTenge: number
+}

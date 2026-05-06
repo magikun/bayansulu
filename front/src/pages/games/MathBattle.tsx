@@ -117,7 +117,7 @@ export default function MathBattle() {
     if (val === problem.answer) {
       setCorrect(idx)
       const newCombo = combo + 1
-      const gain = 10 * (newCombo >= 3 ? 2 : newCombo >= 5 ? 3 : 1)
+      const gain = 10 * (newCombo >= 5 ? 3 : newCombo >= 3 ? 2 : 1)
       setCombo(newCombo)
       setScore(s => s + gain)
 

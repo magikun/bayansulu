@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
-import type { Badge } from '@/types'
+import type { Badge, Coupon } from '@/types'
 import { badgeDefinitions } from '@/data/mockData'
 
 interface PlayerState {
@@ -15,6 +15,9 @@ interface PlayerState {
   badges: Badge[]
   completedGames: string[]
   onboardingComplete: boolean
+  language: 'ru' | 'kk'
+  soundMuted: boolean
+  purchasedCoupons: Coupon[]
 
   setName: (name: string) => void
   setAge: (age: number) => void
@@ -25,6 +28,9 @@ interface PlayerState {
   unlockBadge: (badgeId: string) => void
   completeGame: (gameId: string) => void
   incrementStreak: () => void
+  setLanguage: (lang: 'ru' | 'kk') => void
+  setSoundMuted: (muted: boolean) => void
+  buyPrize: (prizeId: string, cost: number) => boolean
   reset: () => void
 }
 
@@ -40,6 +46,9 @@ const initialState = {
   badges: badgeDefinitions,
   completedGames: [] as string[],
   onboardingComplete: false,
+  language: 'ru' as const,
+  soundMuted: false,
+  purchasedCoupons: [] as Coupon[],
 }
 
 export const usePlayerStore = create<PlayerState>()(
@@ -62,7 +71,7 @@ export const usePlayerStore = create<PlayerState>()(
         }
       },
 
-      addCoins: (amount) => set(s => ({ botacoins: s.botacoins + amount })),
+      addCoins: (amount) => set(s => ({ botacoins: Math.max(0, s.botacoins + amount) })),
 
       unlockBadge: (badgeId) =>
         set(s => ({
@@ -77,6 +86,33 @@ export const usePlayerStore = create<PlayerState>()(
         })),
 
       incrementStreak: () => set(s => ({ streak: s.streak + 1 })),
+
+      setLanguage: (language) => set({ language }),
+
+      setSoundMuted: (soundMuted) => set({ soundMuted }),
+
+      buyPrize: (prizeId, cost) => {
+        const { botacoins, purchasedCoupons } = get()
+        if (botacoins < cost) return false
+
+        // Generate a clean coupon code like BS-BOTA-500-XXXXX
+        const randomHex = Math.random().toString(36).substring(2, 7).toUpperCase()
+        const code = `BS-BOTA-${cost}-${randomHex}`
+        
+        const newCoupon: Coupon = {
+          id: `c-${Date.now()}-${randomHex}`,
+          prizeId,
+          code,
+          purchasedAt: new Date().toISOString(),
+          used: false,
+        }
+
+        set({
+          botacoins: botacoins - cost,
+          purchasedCoupons: [...purchasedCoupons, newCoupon],
+        })
+        return true
+      },
 
       reset: () => set({ ...initialState, badges: badgeDefinitions }),
     }),

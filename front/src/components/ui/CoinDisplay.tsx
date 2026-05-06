@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
 
 interface CoinDisplayProps {
   amount: number

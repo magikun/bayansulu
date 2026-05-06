@@ -1,4 +1,4 @@
-import type { Badge, Avatar, DailyReward } from '@/types'
+import type { Badge, Avatar, DailyReward, PrizeProduct } from '@/types'
 
 // ─── Badges ────────────────────────────────────────────────────────────────────
 export const badgeDefinitions: Badge[] = [
@@ -109,3 +109,37 @@ export const kamBotTips: Record<string, string[]> = {
     'Kazakhs have built yurts for 3000 years! 🏛️',
   ],
 }
+
+// ─── Prize Store Products ──────────────────────────────────────────────────────
+export const prizeStoreProducts: PrizeProduct[] = [
+  {
+    id: 'bota-pack-mini',
+    nameRu: 'Набор конфет «Бота» (Мини)',
+    nameKk: '«Бота» тәттілер жинағы (Мини)',
+    cost: 500,
+    emoji: '🐫',
+    descriptionRu: 'Купон на скидку 300 ₸ при покупке набора молочных суфле «Бота» в фирменном магазине!',
+    descriptionKk: 'Фирмалық дүкеннен «Бота» сүтті суфле жинағын сатып алғанда 300 ₸ жеңілдік купоны!',
+    discountTenge: 300,
+  },
+  {
+    id: 'bota-pack-classic',
+    nameRu: 'Плитка шоколада «Баян Сулу»',
+    nameKk: '«Баян Сұлу» шоколад плиткасы',
+    cost: 1000,
+    emoji: '🍫',
+    descriptionRu: 'Купон на бесплатную плитку фирменного молочного шоколада «Баян Сулу» в любом официальном магазине!',
+    descriptionKk: 'Кез келген ресми дүкенде «Баян Сұлу» сүтті шоколадын тегін алуға арналған купон!',
+    discountTenge: 500,
+  },
+  {
+    id: 'bota-pack-premium',
+    nameRu: 'Семейный набор «КамБот»',
+    nameKk: 'Отбасылық жинақ «КамБот»',
+    cost: 2000,
+    emoji: '🎁',
+    descriptionRu: 'Купон на скидку 1000 ₸ на весь праздничный ассортимент детских сладостей от «Баян Сулу»!',
+    descriptionKk: '«Баян Сұлу» балалар тәттілерінің барлық мерекелік ассортиментіне 1000 ₸ жеңілдік купоны!',
+    discountTenge: 1000,
+  },
+]

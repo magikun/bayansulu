@@ -51,7 +51,8 @@ export default function MemoryRush() {
 
   const handleCardClick = useCallback((id: number) => {
     if (locked || phase !== 'playing') return
-    const card = cards[id]
+    const card = cards.find(c => c.id === id)
+    if (!card) return
     if (card.flipped || card.matched) return
     if (selected.length === 1 && selected[0] === id) return
 
@@ -60,8 +61,15 @@ export default function MemoryRush() {
 
     if (newSelected.length === 2) {
       setLocked(true)
-      const [a, b] = newSelected
-      const cA = cards[a], cB = cards[b]
+      const [idA, idB] = newSelected
+      const cA = cards.find(c => c.id === idA)
+      const cB = cards.find(c => c.id === idB)
+
+      if (!cA || !cB) {
+        setLocked(false)
+        setSelected([])
+        return
+      }
 
       setTimeout(() => {
         if (cA.pairId === cB.pairId) {
@@ -74,13 +82,12 @@ export default function MemoryRush() {
           setMatchedPair(cA.pairId)
           setTimeout(() => setMatchedPair(null), 800)
 
-          setCards(prev => prev.map(c =>
-            c.pairId === cA.pairId ? { ...c, matched: true } : c
-          ))
-
-          // Check win
           setCards(prev => {
-            const allMatched = prev.every(c => c.matched || c.pairId === cA.pairId)
+            const nextCards = prev.map(c =>
+              c.pairId === cA.pairId ? { ...c, matched: true } : c
+            )
+            // Check win
+            const allMatched = nextCards.every(c => c.matched)
             if (allMatched) {
               const finalScore = score + gain + timeLeft * 2
               setScore(finalScore)
@@ -92,13 +99,13 @@ export default function MemoryRush() {
               setConfetti(true)
               setPhase('won')
             }
-            return prev
+            return nextCards
           })
         } else {
           // No match
           setCombo(0)
           setCards(prev => prev.map(c =>
-            (c.id === a || c.id === b) && !c.matched ? { ...c, flipped: false } : c
+            (c.id === idA || c.id === idB) && !c.matched ? { ...c, flipped: false } : c
           ))
         }
         setSelected([])

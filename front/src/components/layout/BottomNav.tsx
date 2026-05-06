@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 
 const TABS = [
   { to: '/map',     icon: '🗺️',  label: 'Map' },
-  { to: '/games/memory', icon: '🎮', label: 'Games' },
+  { to: '/games',    icon: '🎮', label: 'Games' },
   { to: '/rewards', icon: '🏆', label: 'Rewards' },
   { to: '/parent',  icon: '👤',  label: 'Parent' },
 ]

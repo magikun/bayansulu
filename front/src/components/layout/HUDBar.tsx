@@ -4,7 +4,19 @@ import ProgressBar from '@/components/ui/ProgressBar'
 import { motion } from 'framer-motion'
 
 export default function HUDBar() {
-  const { name, avatarId, level, xp, xpToNext, botacoins, streak } = usePlayerStore()
+  const {
+    name,
+    avatarId,
+    level,
+    xp,
+    xpToNext,
+    botacoins,
+    streak,
+    language,
+    setLanguage,
+    soundMuted,
+    setSoundMuted
+  } = usePlayerStore()
   const avatar = avatars[avatarId] ?? avatars[0]
 
   return (
@@ -17,12 +29,33 @@ export default function HUDBar() {
       {/* Name + XP */}
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between">
-          <span className="text-white font-black text-sm truncate max-w-[90px]">
+          <span className="text-white font-black text-sm truncate max-w-[80px]">
             {name || 'Explorer'}
           </span>
           <span className="text-white/50 text-[10px] font-bold">Lv.{level}</span>
         </div>
         <ProgressBar value={xp} max={xpToNext} height={6} color="#00B4D8" glow />
+      </div>
+
+      {/* Toggles */}
+      <div className="flex items-center gap-1 shrink-0">
+        {/* Language toggle */}
+        <motion.button
+          className="text-[10px] font-black px-1.5 py-0.5 rounded-full bg-white/10 text-white/80 border border-white/5 hover:bg-white/20 select-none"
+          whileTap={{ scale: 0.9 }}
+          onClick={() => setLanguage(language === 'ru' ? 'kk' : 'ru')}
+        >
+          {language === 'ru' ? 'KK 🇰🇿' : 'RU 🇷🇺'}
+        </motion.button>
+
+        {/* Sound toggle */}
+        <motion.button
+          className="text-xs p-1 rounded-full bg-white/5 text-white/60 hover:bg-white/15 select-none"
+          whileTap={{ scale: 0.85 }}
+          onClick={() => setSoundMuted(!soundMuted)}
+        >
+          {soundMuted ? '🔇' : '🔊'}
+        </motion.button>
       </div>
 
       {/* Streak */}
