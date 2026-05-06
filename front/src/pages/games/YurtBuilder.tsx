@@ -195,7 +195,7 @@ export default function YurtBuilder() {
         {/* Pieces to place */}
         <div className="glass rounded-4xl p-3">
           <p className="text-white/50 text-xs font-bold mb-2">{LOCAL_TRANS.buildPiecesTitle[language]}</p>
-          <div className="flex gap-2 overflow-x-auto pb-1">
+          <div className="flex gap-2 justify-center pb-1">
             {yurtPieces.map((p, idx) => {
               const isNext = p.id === nextRequired
               const isDone = placed.has(p.id)
@@ -208,7 +208,7 @@ export default function YurtBuilder() {
                     border: isDone ? '2px solid #00E5A0' : isNext ? '2px solid #F5A623' : '2px solid transparent',
                     opacity: !isDone && !isNext && idx > (placed.size) ? 0.4 : 1,
                     cursor: isNext ? 'grab' : 'default',
-                    zIndex: isDragging && isNext ? 50 : 10,
+                    zIndex: isDragging && isNext ? 100 : 10,
                   }}
                   drag={isNext}
                   dragSnapToOrigin
@@ -219,6 +219,7 @@ export default function YurtBuilder() {
                   }}
                   whileHover={isNext ? { scale: 1.08 } : {}}
                   whileTap={isNext ? { scale: 0.92, cursor: 'grabbing' } : {}}
+                  whileDrag={{ scale: 1.18, rotate: 3, boxShadow: '0 15px 30px rgba(0,0,0,0.4)', zIndex: 100 }}
                   onTap={() => isNext && handlePieceDrop(p.id)}
                 >
                   <span className="text-2xl">{isDone ? '✅' : p.icon}</span>
