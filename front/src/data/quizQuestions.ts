@@ -3,122 +3,257 @@ import type { QuizQuestion } from '@/types'
 export const quizQuestions: QuizQuestion[] = [
   {
     id: 'q1', category: 'landmarks',
-    question: 'What is the capital city of Kazakhstan?',
-    answers: ['Almaty', 'Astana', 'Shymkent', 'Aktau'],
+    question: {
+      ru: 'Какой город является столицей Казахстана?',
+      kk: 'Қазақстанның астанасы қандай қала?',
+    },
+    answers: {
+      ru: ['Алматы', 'Астана', 'Шымкент', 'Актау'],
+      kk: ['Алматы', 'Астана', 'Шымкент', 'Ақтау'],
+    },
     correctIndex: 1,
-    fact: 'Astana became the capital in 1997 and means "capital" in Kazakh!',
+    fact: {
+      ru: 'Астана стала столицей в 1997 году и означает «столица» на казахском языке!',
+      kk: 'Астана 1997 жылы астана болды және қазақ тілінде «астана» дегенді білдіреді!',
+    },
     sticker: '🏙️',
   },
   {
     id: 'q2', category: 'animals',
-    question: 'Which bird is shown on the flag of Kazakhstan?',
-    answers: ['Owl', 'Stork', 'Eagle', 'Crane'],
+    question: {
+      ru: 'Какая птица изображена на флаге Казахстана?',
+      kk: 'Қазақстан туына қандай құс бейнеленген?',
+    },
+    answers: {
+      ru: ['Сова', 'Аист', 'Беркут', 'Журавль'],
+      kk: ['Жапалақ', 'Құтан', 'Бүркіт', 'Тырна'],
+    },
     correctIndex: 2,
-    fact: 'The golden eagle represents freedom and strength in Kazakh culture!',
+    fact: {
+      ru: 'Золотой беркут символизирует свободу и силу в казахской культуре!',
+      kk: 'Алтын бүркіт қазақ мәдениетінде бостандық пен күштің белгісі!',
+    },
     sticker: '🦅',
   },
   {
     id: 'q3', category: 'food',
-    question: 'What is the national dish of Kazakhstan?',
-    answers: ['Pilaf', 'Beshbarmak', 'Samsa', 'Lagman'],
+    question: {
+      ru: 'Какое блюдо считается национальным блюдом Казахстана?',
+      kk: 'Қазақстанның ұлттық тағамы қандай?',
+    },
+    answers: {
+      ru: ['Плов', 'Бешбармак', 'Самса', 'Лагман'],
+      kk: ['Асқабақ', 'Бешбармақ', 'Самса', 'Лагман'],
+    },
     correctIndex: 1,
-    fact: "Beshbarmak means 'five fingers' — it's traditionally eaten with hands!",
+    fact: {
+      ru: 'Бешбармак означает «пять пальцев» — его традиционно едят руками!',
+      kk: 'Бешбармақ «бес саусақ» дегенді білдіреді — дәстүрлі түрде қолмен жейді!',
+    },
     sticker: '🥘',
   },
   {
     id: 'q4', category: 'nature',
-    question: 'What is the name of the famous canyon in Kazakhstan?',
-    answers: ['Grand Canyon', 'Colca Canyon', 'Charyn Canyon', 'Tiger Leaping'],
+    question: {
+      ru: 'Как называется знаменитый каньон в Казахстане?',
+      kk: 'Қазақстандағы атақты шатқалдың аты не?',
+    },
+    answers: {
+      ru: ['Гранд-Каньон', 'Каньон Колка', 'Чарынский каньон', 'Тигровый скачок'],
+      kk: ['Гранд каньон', 'Колка шатқалы', 'Шарын шатқалы', 'Жолбарыс секіруі'],
+    },
     correctIndex: 2,
-    fact: 'Charyn Canyon is 80 km long and looks like the surface of Mars!',
+    fact: {
+      ru: 'Чарынский каньон длиной 80 км и выглядит как поверхность Марса!',
+      kk: 'Шарын шатқалы 80 км ұзындығы бар және Марс бетіндей көрінеді!',
+    },
     sticker: '🏜️',
   },
   {
     id: 'q5', category: 'history',
-    question: 'What is the traditional home of Kazakhs called?',
-    answers: ['Tipi', 'Igloo', 'Yurt', 'Pagoda'],
+    question: {
+      ru: 'Как называется традиционное жилище казахов?',
+      kk: 'Қазақтардың дәстүрлі үйі қалай аталады?',
+    },
+    answers: {
+      ru: ['Вигвам', 'Иглу', 'Юрта', 'Пагода'],
+      kk: ['Вигвам', 'Иглу', 'Киіз үй', 'Пагода'],
+    },
     correctIndex: 2,
-    fact: 'Yurts can be assembled and dismantled in just a few hours!',
+    fact: {
+      ru: 'Юрту можно собрать и разобрать всего за несколько часов!',
+      kk: 'Киіз үйді небәрі бірнеше сағат ішінде құрып, сүруге болады!',
+    },
     sticker: '🏕️',
   },
   {
     id: 'q6', category: 'animals',
-    question: 'Which big cat lives in the mountains of Kazakhstan?',
-    answers: ['Tiger', 'Snow Leopard', 'Cheetah', 'Jaguar'],
+    question: {
+      ru: 'Какая большая кошка живет в горах Казахстана?',
+      kk: 'Қазақстан тауларында қандай үлкен мысық тұрады?',
+    },
+    answers: {
+      ru: ['Тигр', 'Снежный барс', 'Гепард', 'Ягуар'],
+      kk: ['Жолбарыс', 'Ақбарс', 'Гепард', 'Ягуар'],
+    },
     correctIndex: 1,
-    fact: 'The snow leopard is Kazakhstan\'s rarest and most beautiful animal!',
+    fact: {
+      ru: 'Снежный барс — самое редкое и красивое животное Казахстана!',
+      kk: 'Ақбарс — Қазақстанның ең сирек және сұлу жануары!',
+    },
     sticker: '🐆',
   },
   {
     id: 'q7', category: 'food',
-    question: 'What is "Kumiss"?',
-    answers: ['A river', 'A city', 'Fermented mare\'s milk', 'A musical instrument'],
+    question: {
+      ru: 'Что такое «Кумыс»?',
+      kk: '«Қымыз» деген не?',
+    },
+    answers: {
+      ru: ['Река', 'Город', 'Кобылье молоко', 'Музыкальный инструмент'],
+      kk: ['Өзен', 'Қала', 'Қымыз', 'Музыкалық аспап'],
+    },
     correctIndex: 2,
-    fact: 'Kumiss has been the drink of Kazakh nomads for thousands of years!',
+    fact: {
+      ru: 'Кумыс тысячи лет был напитком казахских кочевников!',
+      kk: 'Қымыз мыңдаған жылдар бойы қазақ көшпенділерінің сусын болды!',
+    },
     sticker: '🥛',
   },
   {
     id: 'q8', category: 'landmarks',
-    question: 'What is the name of the famous tower in Astana?',
-    answers: ['Eiffel Tower', 'Baiterek Tower', 'Big Ben', 'CN Tower'],
+    question: {
+      ru: 'Как называется знаменитая башня в Астане?',
+      kk: 'Астанадағы атақты мұнара қалай аталады?',
+    },
+    answers: {
+      ru: ['Эйфелева башня', 'Башня Байтерек', 'Биг-Бен', 'Си-Эн Тауэр'],
+      kk: ['Эйфель мұнарасы', 'Бәйтерек', 'Биг-Бен', 'CN мұнарасы'],
+    },
     correctIndex: 1,
-    fact: 'Baiterek means "Tall Poplar" and is 97 meters high!',
+    fact: {
+      ru: 'Байтерек означает «Высокий Тополь» и имеет высоту 97 метров!',
+      kk: 'Бәйтерек «Биік Терек» дегенді білдіреді және биіктігі 97 метр!',
+    },
     sticker: '🗼',
   },
   {
     id: 'q9', category: 'history',
-    question: 'Kazakhstan was part of which ancient trade route?',
-    answers: ['Spice Route', 'Silk Road', 'Tea Road', 'Gold Road'],
+    question: {
+      ru: 'Казахстан был частью какого древнего торгового пути?',
+      kk: 'Қазақстан қандай ежелгі сауда жолының бөлігі болды?',
+    },
+    answers: {
+      ru: ['Пряный путь', 'Великий шёлковый путь', 'Чайный путь', 'Золотой путь'],
+      kk: ['Дәмдеуіш жолы', 'Ұлы Жібек жолы', 'Шай жолы', 'Алтын жол'],
+    },
     correctIndex: 1,
-    fact: 'The Silk Road connected China to Europe through Kazakhstan for centuries!',
+    fact: {
+      ru: 'Великий шёлковый путь соединял Китай с Европой через Казахстан веками!',
+      kk: 'Ұлы Жібек жолы ғасырлар бойы Қазақстан арқылы Қытайды Еуропамен байланыстырды!',
+    },
     sticker: '🛤️',
   },
   {
     id: 'q10', category: 'nature',
-    question: 'Kazakhstan is the world\'s _____ largest country?',
-    answers: ['3rd', '5th', '9th', '12th'],
+    question: {
+      ru: 'Казахстан занимает _____ место среди крупнейших стран мира?',
+      kk: 'Қазақстан дүниежүзіндегі ең ірі елдердің ішінде _____ орында?',
+    },
+    answers: {
+      ru: ['3-е', '5-е', '9-е', '12-е'],
+      kk: ['3-ші', '5-ші', '9-шы', '12-ші'],
+    },
     correctIndex: 2,
-    fact: 'Kazakhstan covers 2.7 million km² — almost as big as Western Europe!',
+    fact: {
+      ru: 'Казахстан занимает 2,7 млн км² — почти как Западная Европа!',
+      kk: 'Қазақстан 2,7 млн км² аумақты алып жатыр — бұл батыс Еуропаға жуық!',
+    },
     sticker: '🌍',
   },
   {
     id: 'q11', category: 'animals',
-    question: 'Which animal was recently saved from extinction in Kazakhstan?',
-    answers: ['Polar Bear', 'Saiga Antelope', 'Red Panda', 'Arabian Oryx'],
+    question: {
+      ru: 'Какое животное недавно было спасено от вымирания в Казахстане?',
+      kk: 'Қазақстанда қандай жануар жақында жойылу қауіпінен құтқарылды?',
+    },
+    answers: {
+      ru: ['Белый медведь', 'Сайгак', 'Красная панда', 'Аравийский орикс'],
+      kk: ['Ақ аю', 'Сайгақ', 'Қызыл панда', 'Араб орыксі'],
+    },
     correctIndex: 1,
-    fact: 'The Saiga antelope population in Kazakhstan has recovered to over 1 million!',
+    fact: {
+      ru: 'Популяция сайгаков в Казахстане восстановилась до более 1 миллиона!',
+      kk: 'Қазақстандағы сайгақтар саны 1 миллионнан асты!',
+    },
     sticker: '🦌',
   },
   {
     id: 'q12', category: 'food',
-    question: 'What are "Baursak"?',
-    answers: ['Fried dough balls', 'Smoked fish', 'Dried berries', 'Cheese rounds'],
+    question: {
+      ru: 'Что такое «Баурсак»?',
+      kk: '«Бауырсақ» деген не?',
+    },
+    answers: {
+      ru: ['Жареные шарики из теста', 'Копчёная рыба', 'Сушёные ягоды', 'Сырные круги'],
+      kk: ['Қуырдақ қамыр шариктері', 'Шұжық балық', 'Кептірілген жидектер', 'Ірімшік шеңберлері'],
+    },
     correctIndex: 0,
-    fact: 'Baursak are golden fried dough balls served at every celebration!',
+    fact: {
+      ru: 'Баурсаки — золотистые жареные шарики из теста, которые подают на каждом празднике!',
+      kk: 'Бауырсақ — әр мерекеде ұсынылатын алтын түсті қуырдақ қамыр шариктері!',
+    },
     sticker: '🍩',
   },
   {
     id: 'q13', category: 'history',
-    question: 'What musical instrument is the symbol of Kazakhstan?',
-    answers: ['Violin', 'Dombra', 'Flute', 'Drums'],
+    question: {
+      ru: 'Какой музыкальный инструмент является символом Казахстана?',
+      kk: 'Қазақстандың нышаны болып табылатын музыкалық аспап қандай?',
+    },
+    answers: {
+      ru: ['Скрипка', 'Домбра', 'Флейта', 'Барабаны'],
+      kk: ['Скрипка', 'Домбыра', 'Флейта', 'Барабандар'],
+    },
     correctIndex: 1,
-    fact: 'The dombra is a two-stringed instrument played for thousands of years!',
+    fact: {
+      ru: 'Домбра — двухструнный инструмент, на котором играют уже тысячи лет!',
+      kk: 'Домбыра — мыңдаған жылдар бойы шертілетін екі ішекті аспап!',
+    },
     sticker: '🎵',
   },
   {
     id: 'q14', category: 'landmarks',
-    question: 'Where is the ancient mausoleum of Khoja Ahmed Yasawi?',
-    answers: ['Almaty', 'Astana', 'Turkestan', 'Aktobe'],
+    question: {
+      ru: 'Где находится древний мавзолей Ходжи Ахмеда Ясави?',
+      kk: 'Хожа Ахмет Ясауи кесенесі қайда орналасқан?',
+    },
+    answers: {
+      ru: ['Алматы', 'Астана', 'Туркестан', 'Актобе'],
+      kk: ['Алматы', 'Астана', 'Түркістан', 'Ақтөбе'],
+    },
     correctIndex: 2,
-    fact: 'It was built 600 years ago and is a UNESCO World Heritage Site!',
+    fact: {
+      ru: 'Он был построен 600 лет назад и является объектом Всемирного наследия ЮНЕСКО!',
+      kk: 'Ол 600 жыл бұрын салынған және ЮНЕСКО Әлемдік мұра тізіміне кіреді!',
+    },
     sticker: '🕌',
   },
   {
     id: 'q15', category: 'nature',
-    question: 'What color is the flag of Kazakhstan?',
-    answers: ['Red and white', 'Blue and yellow', 'Green and gold', 'White and blue'],
+    question: {
+      ru: 'Какого цвета флаг Казахстана?',
+      kk: 'Қазақстан туының түсі қандай?',
+    },
+    answers: {
+      ru: ['Красно-белый', 'Сине-жёлтый', 'Зелёно-золотой', 'Голубой и жёлтый'],
+      kk: ['Қызыл және ақ', 'Көк және сары', 'Жасыл және алтын', 'Көгілдір және сары'],
+    },
     correctIndex: 1,
-    fact: 'Light blue represents the sky and freedom, yellow represents prosperity!',
+    fact: {
+      ru: 'Голубой цвет символизирует небо и свободу, жёлтый — процветание!',
+      kk: 'Көк түс аспан мен бостандықты, сары түс гүлденуді білдіреді!',
+    },
     sticker: '🇰🇿',
   },
 ]

@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import {
-  Brain, House, MathOperations, Trophy, Horse, ArrowRight,
+  Brain, House, MathOperations, Trophy, Horse, ArrowRight, BookOpen,
 } from '@phosphor-icons/react'
 import HUDBar from '@/components/layout/HUDBar'
 import BottomNav from '@/components/layout/BottomNav'
@@ -95,6 +95,20 @@ const LOBBY_GAMES: LobbyGame[] = [
     descKk: 'Шарынмен жүгіріп, кактустардан аул',
     locRu: 'Чарынский каньон',
     locKk: 'Шарын шатқалы',
+  },
+  {
+    id: 'words',
+    to: '/games/words',
+    Icon: BookOpen as any,
+    accentColor: '#8B5CF6',
+    bgFrom: '#1E1B4B',
+    bgTo: '#4C1D95',
+    nameRu: 'Қазақша сөздер',
+    nameKk: 'Қазақша сөздер',
+    descRu: 'Учи казахские слова по картинкам',
+    descKk: 'Суреттер арқылы қазақша сөздер үйрен',
+    locRu: 'Атырау',
+    locKk: 'Атырау',
   },
 ]
 

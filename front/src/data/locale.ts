@@ -89,6 +89,7 @@ export const localeData = {
     gameTitleMath:   'Счёт с Ботой',
     gameTitleQuiz:   'Викторина КамБота',
     gameTitleYurt:   'Сборка Юрты',
+    gameTitleWords:  'Қазақша сөздер',
 
     // WorldMap
     mapTitle: 'Карта Казахстана',
@@ -107,6 +108,37 @@ export const localeData = {
     gameTimesUp: 'Время вышло!',
     gameScore: 'Счёт',
     gameLives: 'Жизни',
+
+    // Quiz game
+    gameQuizKnow: 'Знаешь ли ты? Нажми, чтобы ответить!',
+    gameQuizQuestion: 'Вопрос',
+    gameQuizCorrect: 'Правильно!',
+    gameQuizNotQuite: 'Не совсем!',
+    gameQuizSeeResults: 'Смотри результаты!',
+    gameQuizNextQuestion: 'Следующий вопрос',
+    gameQuizComplete: 'Викторина завершена!',
+    gameQuizStickers: 'Собранные стикеры',
+    gameQuizStickersEarned: 'Заработанные стикеры',
+
+    // Memory game
+    gameMemoryPairsFound: 'пар найдено',
+
+    // Math game
+    gameMathBattleDesc: 'Побеждай сладких врагов с помощью математики!',
+    gameMathHowToPlay: 'КАК ИГРАТЬ',
+    gameMathHowToPlay1: '🍭 Появляются сладкие враги с примерами',
+    gameMathHowToPlay2: '✅ Нажми правильный ответ, чтобы победить',
+    gameMathHowToPlay3: '🔥 3+ правильных подряд = КОМБО!',
+    gameMathStartBtn: '⚔️ Начать бой!',
+    gameMathGameOver: 'Игра окончена!',
+    gameMathAdded: 'добавлено!',
+
+    // Runner game
+    gameRunnerTapStart: 'Нажми, чтобы начать!',
+    gameRunnerJumpHint: 'Нажми на экран или Пробел, чтобы прыгнуть',
+    gameRunnerOops: 'Упс!',
+    gameRunnerRunAgain: 'Бежать снова!',
+    gameCoins: 'Монеты',
   },
   kk: {
     // Nav tabs
@@ -198,6 +230,7 @@ export const localeData = {
     gameTitleMath:   'Ботамен санау',
     gameTitleQuiz:   'КамБот викторинасы',
     gameTitleYurt:   'Киіз үй құрау',
+    gameTitleWords:  'Қазақша сөздер',
 
     // WorldMap
     mapTitle: 'Қазақстан картасы',
@@ -216,6 +249,37 @@ export const localeData = {
     gameTimesUp: 'Уақыт бітті!',
     gameScore: 'Ұпай',
     gameLives: 'Өмірлер',
+
+    // Quiz game
+    gameQuizKnow: 'Білесің бе? Жауап беру үшін басыңыз!',
+    gameQuizQuestion: 'Сұрақ',
+    gameQuizCorrect: 'Дұрыс!',
+    gameQuizNotQuite: 'Дәл емес!',
+    gameQuizSeeResults: 'Нәтижелерді қара!',
+    gameQuizNextQuestion: 'Келесі сұрақ',
+    gameQuizComplete: 'Викторина аяқталды!',
+    gameQuizStickers: 'Жиналған стикерлер',
+    gameQuizStickersEarned: 'Жиналған стикерлер',
+
+    // Memory game
+    gameMemoryPairsFound: 'жұп табылды',
+
+    // Math game
+    gameMathBattleDesc: 'Математиканың көмегімен тәтті жауларды жең!',
+    gameMathHowToPlay: 'ҚАЛАЙ ОЙНАУҒА БОЛАДЫ',
+    gameMathHowToPlay1: '🍭 Тәтті жаулар есептермен бірге пайда болады',
+    gameMathHowToPlay2: '✅ Жеңу үшін дұрыс жауапты бас',
+    gameMathHowToPlay3: '🔥 Қатарынан 3+ дұрыс = КОМБО!',
+    gameMathStartBtn: '⚔️ Шайқасты баста!',
+    gameMathGameOver: 'Ойын аяқталды!',
+    gameMathAdded: 'қосылды!',
+
+    // Runner game
+    gameRunnerTapStart: 'Бастау үшін басыңыз!',
+    gameRunnerJumpHint: 'Секіру үшін экранды немесе Бос орынды басыңыз',
+    gameRunnerOops: 'Ой!',
+    gameRunnerRunAgain: 'Қайта жүгіру!',
+    gameCoins: 'Монеталар',
   },
 } as const
 

@@ -20,6 +20,8 @@ interface PlayerState {
   language: 'ru' | 'kk'
   soundMuted: boolean
   purchasedCoupons: Coupon[]
+  lastPlayedDate: string
+  screenTimeLimit: number
 
   setName: (name: string) => void
   setAge: (age: number) => void
@@ -32,6 +34,7 @@ interface PlayerState {
   incrementStreak: () => void
   setLanguage: (lang: 'ru' | 'kk') => void
   setSoundMuted: (muted: boolean) => void
+  setScreenTimeLimit: (minutes: number) => void
   buyPrize: (prizeId: string, cost: number) => boolean
   sync: () => Promise<void>
   reset: () => void
@@ -53,6 +56,8 @@ const initialState = {
   language: 'ru' as const,
   soundMuted: false,
   purchasedCoupons: [] as Coupon[],
+  lastPlayedDate: '',
+  screenTimeLimit: 30,
 }
 
 export const usePlayerStore = create<PlayerState>()(
@@ -110,13 +115,23 @@ export const usePlayerStore = create<PlayerState>()(
       },
 
       incrementStreak: () => {
-        set(s => ({ streak: s.streak + 1 }))
+        const today = new Date().toISOString().split('T')[0]
+        const { lastPlayedDate, streak } = get()
+        if (lastPlayedDate === today) return // already played today
+        const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0]
+        const newStreak = lastPlayedDate === yesterday ? streak + 1 : 1
+        set({ streak: newStreak, lastPlayedDate: today })
         get().sync()
       },
 
       setLanguage: (language) => set({ language }),
 
       setSoundMuted: (soundMuted) => set({ soundMuted }),
+
+      setScreenTimeLimit: (screenTimeLimit) => {
+        set({ screenTimeLimit })
+        get().sync()
+      },
 
       buyPrize: (prizeId, cost) => {
         const { botacoins, purchasedCoupons } = get()

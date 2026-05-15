@@ -10,6 +10,7 @@ import { usePlayerStore } from '@/store/playerStore'
 import { useGameStore } from '@/store/gameStore'
 import { getTranslation } from '@/data/locale'
 import { pageVariants } from '@/hooks/useAnimation'
+import { avatars } from '@/data/mockData'
 
 const CORRECT_PIN = '1234'
 
@@ -19,6 +20,7 @@ const GAME_LABELS_RU: Record<string, string> = {
   yurt:   'Сборка Юрты',
   quiz:   'Викторина КамБота',
   math:   'Счёт с Ботой',
+  words:  'Қазақша сөздер',
 }
 
 const GAME_LABELS_KK: Record<string, string> = {
@@ -27,6 +29,7 @@ const GAME_LABELS_KK: Record<string, string> = {
   yurt:   'Киіз үй құрау',
   quiz:   'КамБот викторинасы',
   math:   'Ботамен санау',
+  words:  'Қазақша сөздер',
 }
 
 export default function ParentMode() {
@@ -34,13 +37,13 @@ export default function ParentMode() {
   const language  = usePlayerStore(s => s.language)
   const t         = getTranslation(language)
   const gameLabels = language === 'kk' ? GAME_LABELS_KK : GAME_LABELS_RU
-  const { name, level, xp, xpToNext, botacoins, streak, badges, completedGames, reset } = usePlayerStore()
+  const { name, level, xp, xpToNext, botacoins, streak, badges, completedGames, reset, avatarId, screenTimeLimit, setScreenTimeLimit } = usePlayerStore()
   const { highScores } = useGameStore()
 
   const [pin, setPin]       = useState('')
   const [unlocked, setUnlocked] = useState(false)
   const [pinError, setPinError] = useState(false)
-  const [screenTime, setScreenTime] = useState(60)
+  const [screenTime, setScreenTime] = useState(screenTimeLimit)
 
   const handleDigit = (d: string) => {
     if (pin.length >= 4) return
@@ -142,7 +145,7 @@ export default function ParentMode() {
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center text-2xl"
                   style={{ background: 'rgba(217,119,6,0.18)', border: '1px solid rgba(217,119,6,0.3)' }}>
-                  🦅
+                  {avatars.find(a => a.id === avatarId)?.emoji ?? '🦅'}
                 </div>
                 <div>
                   <p className="font-black" style={{ color: '#FEF3C7' }}>{name || (language === 'kk' ? 'Зерттеуші' : 'Исследователь')}</p>
@@ -186,7 +189,11 @@ export default function ParentMode() {
                 <input
                   type="range" min={15} max={180} step={15}
                   value={screenTime}
-                  onChange={e => setScreenTime(Number(e.target.value))}
+                  onChange={e => {
+                    const val = Number(e.target.value)
+                    setScreenTime(val)
+                    setScreenTimeLimit(val)
+                  }}
                   className="flex-1"
                   style={{ accentColor: '#EA580C' }}
                 />

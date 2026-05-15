@@ -32,10 +32,10 @@ export interface MapLocation {
 
 export interface QuizQuestion {
   id: string
-  question: string
-  answers: string[]
+  question: { ru: string; kk: string }
+  answers: { ru: string[]; kk: string[] }
   correctIndex: number
-  fact: string
+  fact: { ru: string; kk: string }
   category: 'nature' | 'history' | 'food' | 'animals' | 'landmarks'
   sticker: string
 }
@@ -48,7 +48,7 @@ export interface DailyReward {
   icon: string
 }
 
-export type GameId = 'memory' | 'runner' | 'yurt' | 'quiz' | 'math'
+export type GameId = 'memory' | 'runner' | 'yurt' | 'quiz' | 'math' | 'words'
 
 export type KamBotMood = 'idle' | 'happy' | 'celebrate' | 'sad' | 'thinking' | 'salute'
 

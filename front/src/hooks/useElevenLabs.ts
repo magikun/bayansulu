@@ -7,7 +7,7 @@
 import { useCallback, useRef } from 'react'
 import { usePlayerStore } from '@/store/playerStore'
 
-const ELEVENLABS_API_KEY = 'sk_4f0c92fadc0af126a743565b04fb4a82d350a1567c5cbcf2'
+const ELEVENLABS_API_KEY = import.meta.env.VITE_ELEVENLABS_API_KEY || ''
 const VOICE_ID           = 'EXAVITQu4vr4xnSDxMaL'  // Bella — free-tier female, works with multilingual v2
 const MODEL_ID           = 'eleven_multilingual_v2'
 const API_URL            = `https://api.elevenlabs.io/v1/text-to-speech/${VOICE_ID}`
@@ -41,6 +41,10 @@ export function useElevenLabs() {
 
   const speak = useCallback(async (text: string) => {
     if (soundMuted) return
+    if (!ELEVENLABS_API_KEY) {
+      console.warn('[ElevenLabs] No API key configured. Skipping TTS.')
+      return
+    }
 
     const clean = cleanText(text)
     if (!clean) return

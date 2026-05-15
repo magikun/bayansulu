@@ -250,8 +250,8 @@ export default function CamelRunner() {
           >
             <KamBot mood="happy" size={70} className="animate-float" />
             <div className="text-center">
-              <p className="text-white font-black text-lg">Camel Runner</p>
-              <p className="text-white/50 text-sm font-bold">Tap to start! 🏃</p>
+              <p className="text-white font-black text-lg">{t.gameTitleRunner}</p>
+              <p className="text-white/50 text-sm font-bold">{t.gameRunnerTapStart} 🏃</p>
             </div>
           </motion.div>
         )}
@@ -259,22 +259,22 @@ export default function CamelRunner() {
 
       {/* Controls hint */}
       {phase === 'playing' && (
-        <p className="text-center text-white/30 text-xs font-bold mt-2">Tap screen or Space to jump</p>
+        <p className="text-center text-white/30 text-xs font-bold mt-2">{t.gameRunnerJumpHint}</p>
       )}
 
       {/* Score display */}
       {phase !== 'idle' && (
         <div className="flex justify-center gap-6 mt-3 px-4">
           <div className="glass rounded-3xl px-4 py-2 text-center">
-            <p className="text-white/50 text-xs font-bold">Score</p>
+            <p className="text-white/50 text-xs font-bold">{t.gameScore}</p>
             <p className="text-kazakh-gold font-black text-xl">{score}</p>
           </div>
           <div className="glass rounded-3xl px-4 py-2 text-center">
-            <p className="text-white/50 text-xs font-bold">Coins</p>
+            <p className="text-white/50 text-xs font-bold">{t.gameCoins}</p>
             <p className="text-kazakh-gold font-black text-xl">{coins}</p>
           </div>
           <div className="glass rounded-3xl px-4 py-2 text-center">
-            <p className="text-white/50 text-xs font-bold">Lives</p>
+            <p className="text-white/50 text-xs font-bold">{t.gameLives}</p>
             <p className="text-candy-pink font-black text-xl">{'❤️'.repeat(Math.max(0, lives))}</p>
           </div>
         </div>
@@ -284,15 +284,15 @@ export default function CamelRunner() {
       <Modal open={phase === 'dead'}>
         <div className="text-center">
           <div className="mb-3"><KamBot mood="sad" size={90} /></div>
-          <h2 className="text-white font-black text-2xl mb-1">Oops! 💨</h2>
+          <h2 className="text-white font-black text-2xl mb-1">{t.gameRunnerOops} 💨</h2>
           <p className="font-bold mb-1" style={{ color: 'rgba(254,243,199,0.6)' }}>{t.gameScore}: <span style={{ color: '#D97706' }}>{score}</span></p>
-          <p className="text-white/60 mb-5 font-bold">Coins: <span className="text-kazakh-gold">+{coins} 🪙</span></p>
+          <p className="text-white/60 mb-5 font-bold">{t.gameCoins}: <span className="text-kazakh-gold">+{coins} 🪙</span></p>
           <Button variant="primary" fullWidth onClick={() => {
             addCoins(coins)
             addXP(Math.floor(score / 5))
             start()
           }}>
-            Run Again! 🏃
+            {t.gameRunnerRunAgain} 🏃
           </Button>
         </div>
       </Modal>

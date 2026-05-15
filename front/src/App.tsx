@@ -16,6 +16,8 @@ import CamelRunner   from '@/pages/games/CamelRunner'
 import YurtBuilder   from '@/pages/games/YurtBuilder'
 import QuizAdventure from '@/pages/games/QuizAdventure'
 import MathBattle    from '@/pages/games/MathBattle'
+import KazakhWordMatch from '@/pages/games/KazakhWordMatch'
+import ScreenTimeEnforcer from '@/components/layout/ScreenTimeEnforcer'
 
 function AnimatedRoutes() {
   const location = useLocation()
@@ -35,6 +37,7 @@ function AnimatedRoutes() {
         <Route path="/games/yurt"   element={<YurtBuilder />} />
         <Route path="/games/quiz"   element={<QuizAdventure />} />
         <Route path="/games/math"   element={<MathBattle />} />
+        <Route path="/games/words"  element={<KazakhWordMatch />} />
         <Route path="*"             element={<Navigate to="/splash" replace />} />
       </Routes>
     </AnimatePresence>
@@ -50,6 +53,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
+      <ScreenTimeEnforcer />
       <AnimatedRoutes />
     </BrowserRouter>
   )
