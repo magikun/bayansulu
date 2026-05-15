@@ -7,6 +7,7 @@ interface GameState {
   highScores: Record<string, number>
   dailyRewardClaimed: boolean
   dailyRewardDate: string
+  sessionStartTime: number
 
   setCurrentGame: (game: GameId | null) => void
   setHighScore: (game: string, score: number) => void
@@ -21,6 +22,7 @@ export const useGameStore = create<GameState>()(
       highScores: {},
       dailyRewardClaimed: false,
       dailyRewardDate: '',
+      sessionStartTime: Date.now(),
 
       setCurrentGame: (game) => set({ currentGame: game }),
 

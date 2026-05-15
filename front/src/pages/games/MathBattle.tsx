@@ -284,7 +284,7 @@ export default function MathBattle() {
             {/* Level badge */}
             <div className="flex justify-center">
               <span className="glass rounded-full px-3 py-1 text-white/60 text-xs font-bold">
-                Level {level} · {score} pts
+                {t.level} {level} · {score} {t.gameScore}
               </span>
             </div>
           </>
@@ -298,19 +298,19 @@ export default function MathBattle() {
           >
             <KamBot mood="happy" size={120} className="animate-float" />
             <div className="text-center">
-              <h2 className="text-white font-black text-2xl mb-1">Math Battle 🍭</h2>
-              <p className="text-white/60 font-bold text-sm">Defeat candy enemies with math!</p>
+              <h2 className="text-white font-black text-2xl mb-1">{t.gameTitleMath} 🍭</h2>
+              <p className="text-white/60 font-bold text-sm">{t.gameMathBattleDesc}</p>
             </div>
             <div className="glass rounded-4xl p-4 w-full text-center">
-              <p className="text-white/50 text-xs font-bold mb-2">HOW TO PLAY</p>
+              <p className="text-white/50 text-xs font-bold mb-2">{t.gameMathHowToPlay}</p>
               <p className="text-white text-sm font-bold leading-relaxed">
-                🍭 Candy enemies appear with math problems<br />
-                ✅ Tap the correct answer to defeat them<br />
-                🔥 Get 3+ right in a row for COMBO!
+                {t.gameMathHowToPlay1}<br />
+                {t.gameMathHowToPlay2}<br />
+                {t.gameMathHowToPlay3}
               </p>
             </div>
             <Button variant="primary" size="lg" fullWidth onClick={start}>
-              ⚔️ Start Battle!
+              {t.gameMathStartBtn}
             </Button>
           </motion.div>
         )}
@@ -320,11 +320,11 @@ export default function MathBattle() {
       <Modal open={phase === 'dead'}>
         <div className="text-center">
           <div className="mb-3"><KamBot mood="sad" size={90} /></div>
-          <h2 className="text-white font-black text-2xl mb-1">Game Over! 💀</h2>
+          <h2 className="text-white font-black text-2xl mb-1">{t.gameMathGameOver} 💀</h2>
           <p className="font-bold mb-1" style={{ color: 'rgba(254,243,199,0.6)' }}>{t.gameScore}: <span style={{ color: '#D97706' }}>{score}</span></p>
-          <p className="text-white/60 mb-1 font-bold">Level: <span className="text-sky-blue">{level}</span></p>
-          <p className="text-kazakh-gold font-black mb-5">+{score} 🪙 added!</p>
-          <Button variant="primary" fullWidth onClick={start}>Try Again! 💪</Button>
+          <p className="text-white/60 mb-1 font-bold">{t.level}: <span className="text-sky-blue">{level}</span></p>
+          <p className="text-kazakh-gold font-black mb-5">+{score} 🪙 {t.gameMathAdded}</p>
+          <Button variant="primary" fullWidth onClick={start}>{t.gameTryAgain} 💪</Button>
         </div>
       </Modal>
     </GameLayout>

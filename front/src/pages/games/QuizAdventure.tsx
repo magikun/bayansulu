@@ -111,10 +111,10 @@ export default function QuizAdventure() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
             >
-              {phase === 'dialogue' && `${['🌟', '🤔', '🎯', '💡', '🚀'][qIdx % 5]} Did you know? Click to answer!`}
-              {phase === 'question' && `Question ${qIdx + 1}: ${q.category.toUpperCase()} 📚`}
-              {phase === 'result' && correct && `✅ Correct! ${q.fact}`}
-              {phase === 'result' && !correct && `❌ Not quite! ${q.fact}`}
+              {phase === 'dialogue' && `${['🌟', '🤔', '🎯', '💡', '🚀'][qIdx % 5]} ${t.gameQuizKnow}`}
+              {phase === 'question' && `${t.gameQuizQuestion} ${qIdx + 1}: ${q.category.toUpperCase()} 📚`}
+              {phase === 'result' && correct && `✅ ${t.gameQuizCorrect} ${q.fact[language]}`}
+              {phase === 'result' && !correct && `❌ ${t.gameQuizNotQuite} ${q.fact[language]}`}
             </motion.div>
           </AnimatePresence>
         </div>
@@ -130,11 +130,11 @@ export default function QuizAdventure() {
               exit={{ opacity: 0, y: -20 }}
             >
               <p className="text-white font-black text-base text-center mb-4 leading-snug">
-                {q.question}
+                {q.question[language]}
               </p>
 
               <div className="grid grid-cols-2 gap-2">
-                {q.answers.map((ans, i) => {
+                {q.answers[language].map((ans, i) => {
                   const isSelected = selected === i
                   const isRight    = i === q.correctIndex
                   const showResult = selected !== null
@@ -166,7 +166,7 @@ export default function QuizAdventure() {
               {phase === 'result' && (
                 <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-3">
                   <Button variant="primary" fullWidth onClick={next}>
-                    {qIdx + 1 >= questions.length ? '🏁 See Results!' : 'Next Question →'}
+                    {qIdx + 1 >= questions.length ? `🏁 ${t.gameQuizSeeResults}` : `${t.gameQuizNextQuestion} →`}
                   </Button>
                 </motion.div>
               )}
@@ -177,7 +177,7 @@ export default function QuizAdventure() {
         {/* Sticker collection */}
         {stickers.length > 0 && (
           <div className="glass rounded-3xl p-3">
-            <p className="text-white/50 text-xs font-bold mb-2">🎴 Stickers Collected</p>
+            <p className="text-white/50 text-xs font-bold mb-2">🎴 {t.gameQuizStickers}</p>
             <div className="flex flex-wrap gap-2">
               {stickers.map((s, i) => (
                 <motion.span key={i} className="text-2xl" initial={{ scale: 0 }} animate={{ scale: 1 }}
@@ -194,18 +194,18 @@ export default function QuizAdventure() {
       <Modal open={phase === 'complete'}>
         <div className="text-center">
           <div className="mb-3"><KamBot mood="celebrate" size={100} /></div>
-          <h2 className="text-kazakh-gold font-black text-2xl mb-1">Quiz Complete! 🏆</h2>
+          <h2 className="text-kazakh-gold font-black text-2xl mb-1">{t.gameQuizComplete} 🏆</h2>
           <p className="text-white font-black text-3xl mb-2">{score} / 100</p>
           <p className="text-white/60 text-sm mb-2">
             <span className="text-kazakh-gold font-black">+{score * 2} 🪙 +{score + 20} ⭐ XP</span>
           </p>
           <div className="glass rounded-3xl p-3 mb-4">
-            <p className="text-white/50 text-xs font-bold mb-1">Stickers earned</p>
+            <p className="text-white/50 text-xs font-bold mb-1">{t.gameQuizStickersEarned}</p>
             <div className="flex flex-wrap gap-1 justify-center text-2xl">
               {stickers.map((s, i) => <span key={i}>{s}</span>)}
             </div>
           </div>
-          <Button variant="primary" fullWidth onClick={restart}>Play Again! 🔄</Button>
+          <Button variant="primary" fullWidth onClick={restart}>{t.gamePlayAgain} 🔄</Button>
         </div>
       </Modal>
     </GameLayout>

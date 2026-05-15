@@ -14,6 +14,8 @@ export const badgeDefinitions: Badge[] = [
   { id: 'combo-king',     name: 'Combo King',     icon: '💥', description: '5× combo in Math Battle',         earned: false },
   { id: 'perfect-quiz',   name: 'Perfect Score',  icon: '⭐', description: '10/10 in Quiz Adventure',         earned: false },
   { id: 'daily-player',   name: 'Daily Player',   icon: '📅', description: 'Claim 7 daily rewards',           earned: false },
+  { id: 'word-master',    name: 'Word Master',    icon: '📖', description: 'Complete Kazakh Word Match',      earned: false },
+  { id: 'perfect-words',  name: 'Perfect Words',  icon: '💯', description: '8/8 in Kazakh Word Match',        earned: false },
 ]
 
 // ─── Avatars ───────────────────────────────────────────────────────────────────

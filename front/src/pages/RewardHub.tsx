@@ -27,7 +27,8 @@ export default function RewardHub() {
     addXP,
     language,
     purchasedCoupons,
-    buyPrize
+    buyPrize,
+    incrementStreak
   } = usePlayerStore()
   const { dailyRewardClaimed, claimDailyReward } = useGameStore()
 
@@ -46,6 +47,7 @@ export default function RewardHub() {
     if (dailyRewardClaimed) return
     const r = getRandomDailyReward()
     claimDailyReward()
+    incrementStreak()
     if (r.type === 'coins' && r.amount) addCoins(r.amount)
     if (r.type === 'xp' && r.amount) addXP(r.amount)
     setReward({ label: r.label, icon: r.icon })

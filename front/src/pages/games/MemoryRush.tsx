@@ -209,10 +209,10 @@ export default function MemoryRush() {
       <Modal open={phase === 'won'} onClose={restart}>
         <div className="text-center">
           <div className="mb-4"><KamBot mood="celebrate" size={100} /></div>
-          <h2 className="text-kazakh-gold font-black text-2xl mb-1">You Won! 🎉</h2>
+          <h2 className="text-kazakh-gold font-black text-2xl mb-1">{t.gameWon} 🎉</h2>
           <p className="font-bold mb-4" style={{ color: 'rgba(254,243,199,0.6)' }}>{t.gameScore}: <span style={{ color: '#D97706' }}>{score}</span></p>
-          <p className="text-white font-bold text-sm mb-5">+{score} 🪙 +60 ⭐ added to your account!</p>
-          <Button variant="primary" fullWidth onClick={restart}>Play Again 🔄</Button>
+          <p className="text-white font-bold text-sm mb-5">+{score} 🪙 +60 ⭐ {language === 'kk' ? 'сенің шотыңа қосылды!' : 'добавлено на твой счёт!'}</p>
+          <Button variant="primary" fullWidth onClick={restart}>{t.gamePlayAgain} 🔄</Button>
         </div>
       </Modal>
 
@@ -220,11 +220,11 @@ export default function MemoryRush() {
       <Modal open={phase === 'lost'} onClose={restart}>
         <div className="text-center">
           <div className="mb-4"><KamBot mood="sad" size={100} /></div>
-          <h2 className="text-white font-black text-2xl mb-1">Time's up! ⏰</h2>
+          <h2 className="text-white font-black text-2xl mb-1">{t.gameTimesUp} ⏰</h2>
           <p className="text-white/60 font-bold mb-5">
-            {cards.filter(c => c.matched).length / 2} / 8 pairs found
+            {cards.filter(c => c.matched).length / 2} / 8 {t.gameMemoryPairsFound}
           </p>
-          <Button variant="primary" fullWidth onClick={restart}>Try Again! 💪</Button>
+          <Button variant="primary" fullWidth onClick={restart}>{t.gameTryAgain} 💪</Button>
         </div>
       </Modal>
     </GameLayout>
